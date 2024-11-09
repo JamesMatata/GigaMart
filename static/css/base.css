@@ -1,0 +1,365 @@
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+    .main_nav {
+        display: none !important;
+    }
+
+    .min_nav {
+        display: flex !important;
+    }
+
+    .footer_gigamart_product_categories_section h3, .footer_contact_section h3, .footer_gigamart_main_navigations_section h3, .footer_connect_section h3 {
+        text-align: center !important;
+    }
+
+    .footer_gigamart_product_categories_section ul li, .footer_gigamart_main_navigations_section ul li {
+        text-align: center !important;
+    }
+
+    .newsletter_signup_div {
+        flex-direction: column !important;
+    }
+
+    .newsletter_signup_div input {
+        width: 100% !important;
+        margin: 10px 0 !important;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 840px) {
+    .main_nav {
+        display: none !important;
+    }
+
+    .min_nav {
+        display: flex !important;
+    }
+
+    .footer_gigamart_product_categories_section h3, .footer_contact_section h3, .footer_gigamart_main_navigations_section h3, .footer_connect_section h3 {
+        text-align: center !important;
+    }
+
+    .footer_gigamart_product_categories_section ul li, .footer_gigamart_main_navigations_section ul li {
+        text-align: center !important;
+    }
+
+    .newsletter_signup_div {
+        flex-direction: column !important;
+    }
+
+    .newsletter_signup_div input {
+        width: 100% !important;
+        margin: 10px 0 !important;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 840px) and (max-width: 991.98px) {
+    .account_dropdown_button_left_icon, .products_button_icon_left {
+        display: none !important;
+    }
+
+    .searchbar_input {
+        max-width: 150px !important;
+    }
+
+    .dropdown_button {
+        padding: 7px 10px !important;
+    }
+
+    .footer_gigamart_product_categories_section h3, .footer_contact_section h3, .footer_gigamart_main_navigations_section h3, .footer_connect_section h3 {
+        text-align: center !important;
+    }
+
+    .footer_gigamart_product_categories_section ul li, .footer_gigamart_main_navigations_section ul li {
+        text-align: center !important;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+
+}
+
+
+.main_nav_right_items,
+.main_nav,
+.dropdown_button,
+.account_dropdown_button_links,
+.searchbar_div {
+    display: flex;
+    align-items: center;
+}
+
+.main_nav_right_items,
+.account_dropdown_button_links,
+.searchbar_div {
+    flex-direction: row;
+}
+
+.dropdown_button {
+    padding: 7px 20px;
+    font-size: 16px;
+    background-color: #6490ff;
+    color: white;
+    border: 1px solid white;
+    border-radius: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+.products_button_icon_right,
+.account_button_icon_right {
+    transition: transform 0.3s ease;
+}
+
+.dropdown_menu {
+    display: none;
+    position: absolute;
+    background-color: #6490ff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 3px 3px 15px 15px;
+    overflow: hidden;
+    margin-top: 5px;
+    min-width: 200px;
+    z-index: 1;
+    border: 4px solid white;
+    padding: 10px;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+}
+
+.dropdown_menu ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+.dropdown_menu ul li {
+  padding: 0;
+  width: 100%;
+}
+
+.dropdown_menu ul li a {
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  color: white;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.dropdown_menu ul li a:hover, .dropdown_menu ul li a:active {
+  border-bottom: 2px solid white;
+}
+
+.rotate-icon {
+    transform: rotate(180deg);
+}
+
+.show {
+    display: block;
+}
+
+.account_dropdown_button_links {
+    justify-content: space-between;
+    padding: 5px 10px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      color: white;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    text-decoration: none;
+}
+
+.account_dropdown_button_links:hover, .account_dropdown_button_links:active {
+    border-bottom: 2px solid white;
+}
+
+.account_dropdown_button_links svg {
+    width: 25px;
+    height: 25px;
+}
+
+.main_nav {
+    background-color: #6490ff;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.searchbar_div {
+    background-color: white;
+    border: 1px solid white;
+    margin-left: 20px;
+    border-radius: 0 15px 0 0;
+    padding-left: 10px;
+}
+
+.searchbar_button {
+    padding: 10px;
+    border-radius: 0 15px 0 0;
+    border: none;
+    background-color: #6490ff;
+    color: white;
+    font-size: 16px;
+}
+
+.searchbar_input {
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    width: 250px;
+}
+
+.searchbar_input:focus {
+    outline: none;
+}
+
+.account_dropdown_auth_button {
+    width: 100%;
+    padding: 8px 0;
+    box-sizing: border-box;
+    font-weight: 500;
+    color: #6490ff;
+    background-color: white;
+    border-radius: 1px 1px 10px 10px;
+    border: none;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+
+.min_nav {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: #6490FF;
+    padding: 10px;
+}
+
+/*-------------------- FOOTER ------------------------ */
+
+.newsletter_signup_div {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 2px solid white;
+    align-items: center;
+    justify-content: center;
+}
+
+.newsletter_signup_div label {
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+}
+
+.newsletter_signup_div input {
+    margin: 0 5px;
+    font-size: 16px;
+    padding: 10px;
+    width: 400px;
+    border-radius: 5px;
+    border: none;
+    background-color: white;
+}
+
+.newsletter_signup_div input:focus {
+    outline: none;
+}
+
+.newsletter_signup_div button {
+    padding: 7px 15px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: #6490ff;
+    color: white;
+}
+
+.footer_about_gigamart_section,
+.footer_gigamart_main_navigations_section,
+.footer_gigamart_product_categories_section,
+.footer_gigamart_contact_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.footer_gigamart_product_categories_section h3,
+.footer_contact_section h3,
+.footer_gigamart_main_navigations_section h3,
+.footer_connect_section h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.footer_gigamart_product_categories_section ul,
+.footer_gigamart_main_navigations_section ul {
+    list-style-type: none;
+    padding-left: 10px;
+}
+
+.footer_gigamart_product_categories_section ul li a,
+.footer_gigamart_main_navigations_section ul li a {
+    padding: 5px 0;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.footer_contact_section,
+.footer_connect_section {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer_contact_section p {
+    margin: 5px 0;
+    color: white;
+}
+
+.footer_contact_section p svg {
+    width: 25px;
+    height: 25px;
+}
+
+.footer_connect_section div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.footer_connect_section div a {
+    padding: 0 5px;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.footer_connect_section div a svg {
+    width: 35px;
+    height: 35px;
+}

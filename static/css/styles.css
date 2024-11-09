@@ -1,0 +1,206 @@
+@media (max-width: 575.98px) {
+    .nav-button {
+        display: none !important;
+    }
+
+    .category-container {
+        overflow-x: auto !important;
+    }
+    .how_it_works_step_div {
+        height: auto!important;
+    }
+    .about_us_text_div p {
+        text-align: center;
+    }
+}
+@media (min-width: 576px) and (max-width: 770px) {
+    .how_it_works_step_div {
+        height: auto!important;
+    }
+    .about_us_text_div p {
+        text-align: center;
+    }
+}
+@media (min-width: 770px) and (max-width: 840px) {
+    .how_it_works_step_div {
+        height: 160px!important;
+    }
+    .about_us_logo_div img{
+    width: 200px!important;
+}
+}
+@media (min-width: 840px) and (max-width: 991.98px) {
+    .how_it_works_step_div {
+        height: 150px!important;
+    }
+}
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .how_it_works_step_div {
+        height: 130px!important;
+    }
+}
+
+/* Category Cards -----------------------------------------------------*/
+.category-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.category-cards-wrapper {
+    display: flex;
+    transition: transform 0.3s ease;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.category-cards-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.category-cards {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.category_card {
+    width: 200px;
+    height: 280px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #6490ff;
+    border-radius: 0 0 10px 10px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+}
+
+.category_card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.category_title_div {
+    padding: 5px;
+    background-color: #6490ff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 46px;
+    justify-content: center;
+}
+
+.Category_title {
+    line-height: 18px;
+    max-height: 36px;
+    overflow: hidden;
+    margin: 0;
+    text-align: center;
+    font-size: 16px;
+}
+
+.Category_title a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+}
+
+.nav-button {
+    background-color: #6490ff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 1;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.left {
+    position: absolute;
+    left: 0;
+    border-radius: 10px 0 0 10px;
+}
+
+.right {
+    position: absolute;
+    right: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+/* How It Works Styles ---------------------------------------------------------*/
+
+.how_it_works_step_div {
+    border: 1px solid #6490ff;
+    padding: 10px;
+    border-radius: 10px;
+    height: 120px;
+    box-sizing: border-box;
+}
+
+.how_it_works_step_div h4 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #6490ff;
+}
+
+.how_it_works_step_div div {
+    display: flex;
+    flex-direction: row;
+}
+
+.how_it_works_step_div div svg {
+    width: 60px;
+    height: 60px;
+    color: #6490ff;
+}
+
+.how_it_works_step_div div p {
+    flex: 1;
+    margin: 0;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 500;
+    color: #6490ff;
+}
+
+.how_it_works_div_title {
+    text-align: center;
+    color: #6490ff;
+    margin: 10px 0;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+/* About Us Styles ----------------------------------------------------------------------------*/
+
+.about_us_div {
+    margin: auto;
+    padding: 10px 20px;box-sizing: border-box;border: 1px solid rgb(206, 206, 206);border-radius: 20px 20px 0 0;
+}
+.about_us_logo_div {
+    background-color: #6490ff;display: flex;flex-direction: column;align-items: center;justify-content: center;box-sizing: border-box;padding: 0;padding: 40px 0;
+}
+.about_us_logo_div img{
+    width: 300px;
+}
+.about_us_text_div {
+    padding: 5px 10px;box-sizing: border-box;
+}
+.about_us_text_div p {
+    font-weight: 500;
+    color: #6490ff;
+}
+
