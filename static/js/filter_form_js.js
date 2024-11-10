@@ -173,38 +173,3 @@ document.addEventListener('DOMContentLoaded', initializeFilters);
 
 // Add event listener to handle screen resize
 window.addEventListener('resize', initializeFilters);
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Select all pagination links
-    document.getElementById('pagination-links').addEventListener('click', function (event) {
-        event.preventDefault();
-
-        const link = event.target;
-        if (link.classList.contains('page-link')) {
-            const page = link.getAttribute('data-page');
-
-            // Update product list via AJAX
-            fetchProducts(page);
-        }
-    });
-});
-
-function fetchProducts(page) {
-    // Send AJAX request to fetch the products for the selected page
-    fetch(`?page=${page}`, {
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-    .then(response => response.text())
-    .then(html => {
-        // Replace product list and pagination links
-        document.getElementById('product-list-div').innerHTML = html;
-
-        // Refresh pagination links
-        const paginationHTML = document.getElementById('pagination-links').innerHTML;
-        document.getElementById('pagination-links').innerHTML = paginationHTML;
-    })
-    .catch(error => console.error('Error fetching paginated products:', error));
-}
-

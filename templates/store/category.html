@@ -179,7 +179,6 @@
 
             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
                 <div class="row" id="product-list-div">
-                    {% include 'store/_product_list.html' %}
                     {% for item in products %}
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3" style="padding: 0 5px">
                             <div class="grid_product_card" style="width: 100%!important;">
@@ -235,22 +234,9 @@
                         </div>
                     {% endfor %}
                 </div>
-                {% if products.paginator.num_pages > 1 %}
-                    <!-- Pagination controls here -->
-                    <div id="pagination-links">
-                        {% if products.has_previous %}
-                            <a href="?page={{ products.previous_page_number }}" class="page-link" data-page="{{ products.previous_page_number }}">Previous</a>
-                        {% endif %}
-                        <span>Page {{ products.number }} of {{ products.paginator.num_pages }}</span>
-                        {% if products.has_next %}
-                            <a href="?page={{ products.next_page_number }}" class="page-link" data-page="{{ products.next_page_number }}">Next</a>
-                        {% endif %}
-                    </div>
-                {% endif %}
 
 
             </div>
         </div>
     </div>
-
 {% endblock %}

@@ -175,17 +175,7 @@
                     {% endfor %}
                 </div>
             </div>
-            {% if products.paginator.num_pages > 1 %}
-                <div id="pagination-links">
-                    {% if products.has_previous %}
-                        <a href="?page={{ products.previous_page_number }}" class="page-link" data-page="{{ products.previous_page_number }}">Previous</a>
-                    {% endif %}
-                    <span>Page {{ products.number }} of {{ products.paginator.num_pages }}</span>
-                    {% if products.has_next %}
-                        <a href="?page={{ products.next_page_number }}" class="page-link" data-page="{{ products.next_page_number }}">Next</a>
-                    {% endif %}
-                </div>
-            {% endif %}
+            
 
         </div>
     </div>

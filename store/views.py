@@ -49,27 +49,14 @@ def category_list(request, category_slug):
     if arrival == 'newest':
         products = products.order_by('-id')
 
-    # Pagination settings
-    paginator = Paginator(products, 1)  # Show 30 products per page
-    page_number = request.GET.get('page')
-
-    try:
-        paginated_products = paginator.page(page_number)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page
-        paginated_products = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range, deliver last page of results
-        paginated_products = paginator.page(paginator.num_pages)
-
     # Check for AJAX request and only render product list if true
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return render(request, 'store/_product_list.html', {'products': paginated_products})
+        return render(request, 'store/_product_list.html', {'products': products})
 
     return render(request, 'store/category.html', {
         'category': category,
         'subcategories': subcategories,
-        'products': paginated_products,
+        'products': products,
     })
 
 
