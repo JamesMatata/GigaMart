@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ subcategory.name }} | GigaMart{% endblock %}
+
+{% block main %}
+    <div class="container" style="margin-top: 100px">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3" id="large-screen-filter-form-div">
+                <form id="large-screen-filter-form">
+                    <!-- Price Range -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Price Range:</h3>
+
+
+                        <input type="range" id="large_price_range" name="price_range" min="0" max="500000" step="50"
+                               value="500000">
+                        <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+                            <input style="display: inline-block;" type="number" id="large_price_min" name="price_min"
+                                   placeholder="Min Price" max="500000">
+                            <input type="number" id="large_price_max" name="price_max" placeholder="Max Price"
+                                   max="500000">
+                        </div>
+                    </div>
+
+                    <!-- Discount Offer -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Discount Offer:</h3>
+                        <label><input type="checkbox" name="discount" value="1"> Discounted Items</label>
+                    </div>
+
+                    <!-- Availability -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Availability:</h3>
+                        <label><input type="checkbox" name="availability" value="in_stock"> In Stock</label>
+                    </div>
+
+                    <!-- Warranty Period -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Warranty Period:</h3>
+                        <div class="filter-options">
+                            <label><input type="checkbox" name="warranty" value="1"> 1 Year</label>
+                            <label><input type="checkbox" name="warranty" value="2"> 2 Years</label>
+                            <label><input type="checkbox" name="warranty" value="3"> 3 Years</label>
+                        </div>
+                    </div>
+
+                    <!-- Arrival -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Arrival:</h3>
+                        <div class="filter-options">
+                            <label><input type="checkbox" name="arrival" value="recent"> New Arrival</label>
+                            <label><input type="checkbox" name="arrival" value="old"> Older Products</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3" id="small-screen-filter-form-div"
+                 style="display: none">
+                <!-- Dropdown button with icon -->
+                <button id="filter-toggle-btn" class="filter-toggle-btn"
+                        style="background-color: #6490ff; border-radius: 3px; padding: 5px 10px; border: 1px solid white; color: white; width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                    <span>Filter Options</span>
+                    <i id="toggle-icon" class="fas fa-chevron-down"></i>
+                </button>
+
+                <form id="small-screen-filter-form" style="display: none; margin-top: 10px;">
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Price Range:</h3>
+
+                        <input type="range" id="small_price_range" name="price_range" min="0" max="500000" step="50"
+                               value="500000">
+                        <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+                            <input style="display: inline-block;" type="number" id="small_price_min" name="price_min"
+                                   placeholder="Min Price" max="500000">
+                            <input type="number" id="small_price_max" name="price_max" placeholder="Max Price"
+                                   max="500000">
+                        </div>
+                    </div>
+
+                    <!-- Discount Offer -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Discount Offer:</h3>
+                        <label><input type="checkbox" name="discount" value="1"> Discounted Items</label>
+                    </div>
+
+                    <!-- Availability -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Availability:</h3>
+                        <label><input type="checkbox" name="availability" value="in_stock"> In Stock</label>
+                    </div>
+
+                    <!-- Warranty Period -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Warranty Period:</h3>
+                        <div class="filter-options">
+                            <label><input type="checkbox" name="warranty" value="1"> 1 Year</label>
+                            <label><input type="checkbox" name="warranty" value="2"> 2 Years</label>
+                            <label><input type="checkbox" name="warranty" value="3"> 3 Years</label>
+                        </div>
+                    </div>
+
+                    <!-- Arrival -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Arrival:</h3>
+                        <div class="filter-options">
+                            <label><input type="checkbox" name="arrival" value="recent"> New Arrival</label>
+                            <label><input type="checkbox" name="arrival" value="old"> Older Products</label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <button type="submit" id="apply-filters-btn" class="apply-filter-btn"
+                                style="background-color: #6490ff; border-radius: 3px; padding: 5px 10px; border: 1px solid white; color: white; width: 100%;">
+                            Apply Filters
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
+                <div class="row" id="product-list-div">
+                {% include 'store/_product_list.html' %}
+                    {% for item in products %}
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3" style="padding: 0 5px">
+                            <div class="grid_product_card" style="width: 100%!important;">
+                                <div class="image_div" style="height: 50%; width: 100%; box-sizing: border-box">
+                                    <img src="{{ item.main_image.url }}" alt="{{ item.name }}_image"/>
+                                </div>
+                                <div class="details_div">
+                                    <p class="product_title">
+                                        <a href="#">{{ item.name }}</a>
+                                    </p>
+                                    <p class="product_price">
+                                        KES <span>{{ item.price }}</span>
+                                        {% if item.discount > 0 %}
+                                            | <span>{{ item.discount }}%</span>
+                                        {% endif %}
+                                    </p>
+                                    <p style="text-align: center; margin: 4px 0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                             viewBox="0 0 15 15">
+                                            <path fill="currentColor"
+                                                  d="M9.875 7.5a2.375 2.375 0 1 1-4.75 0a2.375 2.375 0 0 1 4.75 0"/>
+                                        </svg>
+                                        {% if item.items_remaining > 20 %}
+                                            <span style="color: green">Available</span>
+                                        {% elif item.items_remaining > 0 %}
+                                            <span style="color: orange">{{ item.items_remaining }} remaining</span>
+                                        {% else %}
+                                            <span style="color: red">Out of stock</span>
+                                        {% endif %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                             viewBox="0 0 15 15">
+                                            <path fill="currentColor"
+                                                  d="M9.875 7.5a2.375 2.375 0 1 1-4.75 0a2.375 2.375 0 0 1 4.75 0"/>
+                                        </svg>
+                                    </p>
+                                    <div class="product_card_basket_and_later_div">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                            <path fill="currentColor"
+                                                  d="M12.001 4.529a6 6 0 0 1 8.242.228a6 6 0 0 1 .236 8.236l-8.48 8.492l-8.478-8.492a6 6 0 0 1 8.48-8.464"/>
+                                        </svg>
+                                        <div class="no_items_to_add_div">
+                                            <button class="product_cart_decrease_items_button">+</button>
+                                            <input class="product_cart_items_to_add_no" type="number" value="1"/>
+                                            <button class="product_cart_increase_items_button">-</button>
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
+                                            <path fill="currentColor"
+                                                  d="m2.449 14.398l.447-.224zm10.102 0l.447.224zM.703 6h13.594V5H.703zM14 5.703v.439h1v-.439zM12.386 14H2.614v1h9.772zM1 6.142v-.439H0v.439zm1.896 8.032A17.96 17.96 0 0 1 1 6.142H0c0 2.944.685 5.847 2.002 8.48zM2.614 14c.12 0 .229.068.282.174l-.894.448a.69.69 0 0 0 .612.378zm9.49.174a.32.32 0 0 1 .282-.174v1c.26 0 .496-.146.612-.378zM14 6.142c0 2.788-.65 5.538-1.896 8.032l.894.448A18.96 18.96 0 0 0 15 6.142zM14.297 6A.297.297 0 0 1 14 5.703h1A.703.703 0 0 0 14.297 5zM.703 5A.703.703 0 0 0 0 5.703h1A.297.297 0 0 1 .703 6zm3.226.757l3-5L6.07.243l-3 5zm4.142-5l3 5l.858-.514l-3-5zM7 7v5h1V7zm-2 3h5V9H5z"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% if products.paginator.num_pages > 1 %}
+                <div id="pagination-links">
+                    {% if products.has_previous %}
+                        <a href="?page={{ products.previous_page_number }}" class="page-link" data-page="{{ products.previous_page_number }}">Previous</a>
+                    {% endif %}
+                    <span>Page {{ products.number }} of {{ products.paginator.num_pages }}</span>
+                    {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}" class="page-link" data-page="{{ products.next_page_number }}">Next</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -6,6 +6,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models.signals import pre_delete
 from django.dispatch import receiver
+from django.urls import reverse
 from django.utils.text import slugify
 
 User = get_user_model()
@@ -24,6 +25,9 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'categories'
 
+    def get_absolute_url(self):
+        return reverse('store:category_list', args=[self.slug])
+
     def __str__(self):
         return self.name
 
@@ -38,6 +42,9 @@ class Subcategory(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('store:subcategory_list', args=[self.category.slug, self.slug])
 
     class Meta:
         verbose_name_plural = 'Subcategories'
@@ -72,6 +79,7 @@ class Product(models.Model):
     subcategory = models.ForeignKey('Subcategory', on_delete=models.SET_NULL, null=True, blank=True)
     traded_count = models.IntegerField(default=0)
     items_remaining = models.IntegerField(default=0)
+    warrant_months = models.IntegerField(default=0)
     discount = models.DecimalField(max_digits=5, decimal_places=2, default=0,
                                    validators=[MinValueValidator(0), MaxValueValidator(100)])
     main_image = models.ImageField(upload_to='products')

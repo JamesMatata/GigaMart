@@ -1,0 +1,79 @@
+@media (max-width: 768px) {
+    #large-screen-filter-form-div {
+        display: none!important;
+    }
+    #small-screen-filter-form-div {
+        display: block!important;
+    }
+}
+
+
+#large-screen-filter-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    color: white;
+    background-color: #6490ff;
+    padding: 15px;
+    border-radius: 0 0 20px 20px;
+    box-sizing: border-box;
+}
+
+#small-screen-filter-form {
+    position: absolute;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 4px black;
+    box-sizing: border-box;
+    margin: auto;
+    max-width: 95%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+}
+
+#large-screen-filter-form .subcategories_div {
+    max-height: 120px;
+    overflow-y: auto;
+    padding: 5px;
+    border: 1px solid #fff;
+}
+
+#large-screen-filter-form label {
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+}
+
+#large-screen-filter-form .filter-group {
+    margin-bottom: 15px;
+}
+
+#large-screen-filter-form #subcategory-options label,
+#large-screen-filter-form .filter-options label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: normal;
+}
+
+#large-screen-filter-form .filter_section_title, #small-screen-filter-form .filter_section_title {
+    margin: 10px 0;
+    font-size: 17px;
+    font-weight: bold;
+}
+#small-screen-filter-form input[type="number"], #large-screen-filter-form input[type="number"] {
+    padding: 0.4rem;
+    box-sizing: border-box;
+    max-width: 100px;
+    border-radius: 3px;
+    border: 1px solid black;
+}
+
+#large-screen-filter-form input[type="number"],
+#large-screen-filter-form input[type="range"] {
+    padding: 0.4rem;
+    box-sizing: border-box;
+}
+#small-screen-filter-form input[type="range"], #large-screen-filter-form input[type="range"] {
+    width: 100%;
+}
+

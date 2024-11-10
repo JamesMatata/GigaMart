@@ -4,16 +4,20 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}GigaMart{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/base.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/product_cards.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/filter_form_styles.css' %}"/>
     {% block extra_styles %}{% endblock %}
 </head>
 <body>
-<nav>
+<nav style="position: fixed;z-index: 999;width: 100%;top: 0">
     <div class="container-fluid main_nav">
-        <img src="../media/app_files/logo_colored.png" alt="" style="width: 150px"/>
+        <a  href="{% url 'store:index' %}">
+            <img src="{% static 'app_files/logo_colored.png' %}" alt="" style="width: 150px;display: inline-block;"/>
+        </a>
         <div style="display: flex; flex-direction: row">
             <div>
                 <button
@@ -53,7 +57,7 @@
                 <div class="dropdown_menu" id="products_dropdown_menu">
                     <ul>
                         {% for category in categories %}
-                            <li><a href="#">{{ category.name }}</a></li>
+                            <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -277,11 +281,13 @@
                                     d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z"></path>
                         </g>
                     </svg>
+                    <a  href="{% url 'store:index' %}">
                     <img
-                            src="../media/app_files/logo_colored.png"
+                            src="{% static 'app_files/logo_colored.png' %}"
                             alt=""
                             style="width: 150px; margin-left: 5px"
                     />
+                    </a>
                 </div>
                 <div
                         class="dropdown_menu"
@@ -473,7 +479,7 @@
             "
             >
                 <img
-                        src="../media/app_files/logo_colored.png"
+                        src="{% static 'app_files/logo_colored.png' %}"
                         alt=""
                         style="width: 200px"
                 />
@@ -510,7 +516,7 @@
                     <h3>Product Categories</h3>
                     <ul>
                         {% for category in categories %}
-                            <li><a href="#">{{ category.name }}</a></li>
+                            <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -617,6 +623,9 @@
 
 <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'js/base.js' %}"></script>
+<script src="{% static 'js/product_cards.js' %}"></script>
+<script src="{% static 'js/category_card.js' %}"></script>
+<script src="{% static 'js/filter_form_js.js' %}"></script>
 {% block extra_scripts %}{% endblock %}
 </body>
 </html>

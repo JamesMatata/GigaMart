@@ -41,7 +41,7 @@
 }
 
 /* Category Cards -----------------------------------------------------*/
-.category-container {
+.category-container, .product-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,7 +51,7 @@
     margin-top: 10px;
 }
 
-.category-cards-wrapper {
+.category-cards-wrapper, .product-cards-wrapper {
     display: flex;
     transition: transform 0.3s ease;
     width: 100%;
@@ -61,8 +61,12 @@
     -ms-overflow-style: none;
 }
 
-.category-cards-wrapper::-webkit-scrollbar {
+.category-cards-wrapper::-webkit-scrollbar, .product-cards-wrapper::-webkit-scrollbar {
     display: none;
+}
+
+.columns_title_div {
+    width: 100%;padding: 15px;background-color: #6490ff;box-sizing: border-box;border-radius: 10px 10px 0 0;
 }
 
 .category-cards {
@@ -203,4 +207,8 @@
     font-weight: 500;
     color: #6490ff;
 }
+
+/* About Us Styles ----------------------------------------------------------------------------*/
+
+
 

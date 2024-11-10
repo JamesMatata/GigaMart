@@ -1,15 +1,23 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Home | GigaMart{% endblock %}
 
 {% block main %}
-    <div class="container" style="margin-top: 50px">
-        <div style="width: 100%;padding: 15px;background-color: #6490ff;box-sizing: border-box;border-radius: 10px 10px 0 0;">
+    <div class="container" style="margin-top: 100px">
+        <div class="columns_title_div">
             <h3 style="font-size: 20px;color: white;font-weight: 500;margin: 0;">All Categories</h3>
         </div>
         <div class="container category-container">
             <button class="nav-button left" onclick="moveCard('left')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M7.94 13.06a1.5 1.5 0 0 1 0-2.12l5.656-5.658a1.5 1.5 0 1 1 2.121 2.122L11.122 12l4.596 4.596a1.5 1.5 0 1 1-2.12 2.122l-5.66-5.658Z"/></g></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                    <g fill="none" fill-rule="evenodd">
+                        <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/>
+                        <path fill="currentColor"
+                              d="M7.94 13.06a1.5 1.5 0 0 1 0-2.12l5.656-5.658a1.5 1.5 0 1 1 2.121 2.122L11.122 12l4.596 4.596a1.5 1.5 0 1 1-2.12 2.122l-5.66-5.658Z"/>
+                    </g>
+                </svg>
             </button>
             <div class="category-cards-wrapper">
                 <div class="category-cards">
@@ -20,7 +28,7 @@
                             </div>
                             <div class="category_title_div">
                                 <p class="Category_title">
-                                    <a href="#">{{ category.name }}</a>
+                                    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
                                 </p>
                             </div>
                         </div>
@@ -28,13 +36,102 @@
                 </div>
             </div>
             <button class="nav-button right" onclick="moveCard('right')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M16.06 10.94a1.5 1.5 0 0 1 0 2.12l-5.656 5.658a1.5 1.5 0 1 1-2.121-2.122L12.879 12L8.283 7.404a1.5 1.5 0 0 1 2.12-2.122l5.658 5.657Z"/></g></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                    <g fill="none" fill-rule="evenodd">
+                        <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/>
+                        <path fill="currentColor"
+                              d="M16.06 10.94a1.5 1.5 0 0 1 0 2.12l-5.656 5.658a1.5 1.5 0 1 1-2.121-2.122L12.879 12L8.283 7.404a1.5 1.5 0 0 1 2.12-2.122l5.658 5.657Z"/>
+                    </g>
+                </svg>
             </button>
         </div>
     </div>
 
+    <div class="container" style="margin-top: 50px">
+        <div class="columns_title_div">
+            <h3 style="font-size: 20px;color: white;font-weight: 500;margin: 0;">Most Traded</h3>
+        </div>
+        <div class="product-grid" style="margin-top: 10px">
+            {% for item in top_traded_products %}
+                <div class="product_card">
+                    <div class="image_div" style="height: 50%; width: 100%; box-sizing: border-box">
+                        <img src="{{ item.main_image.url }}" alt="{{ item.name }}_image"/>
+                    </div>
+                    <div class="details_div">
+                        <p class="product_title">
+                            <a href="#"
+                            >{{ item.name }}
+                            </a>
+                        </p>
+                        <p class="product_price">
+                            KES <span>{{ item.price }}</span>
+                            {% if item.discount > 0 %}
+                                | <span>{{ item.discount }}%</span>
+                            {% endif %}
+                        </p>
+                        <p style="text-align: center; margin: 4px 0">
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="1em"
+                                    height="1em"
+                                    viewBox="0 0 15 15"
+                            >
+                                <path
+                                        fill="currentColor"
+                                        d="M9.875 7.5a2.375 2.375 0 1 1-4.75 0a2.375 2.375 0 0 1 4.75 0"
+                                />
+                            </svg>
+                            {% if item.items_remaining > 20 %}
+                                <span style="color: green">Available</span>
+                            {% elif item.items_remaining > 0 %}
+                                <span style="color: orange">{{ item.items_remaining }} remaining</span>
+                            {% else %}
+                                <span style="color: red">Out of stock</span>
+                            {% endif %}
+                            <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="1em"
+                                    height="1em"
+                                    viewBox="0 0 15 15"
+                            >
+                                <path
+                                        fill="currentColor"
+                                        d="M9.875 7.5a2.375 2.375 0 1 1-4.75 0a2.375 2.375 0 0 1 4.75 0"
+                                />
+                            </svg>
+                        </p>
+                        <div class="product_card_basket_and_later_div">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path
+                                        fill="currentColor"
+                                        d="M12.001 4.529a6 6 0 0 1 8.242.228a6 6 0 0 1 .236 8.236l-8.48 8.492l-8.478-8.492a6 6 0 0 1 8.48-8.464"
+                                />
+                            </svg>
+                            <div class="no_items_to_add_div">
+                                <button class="product_cart_decrease_items_button">+</button>
+                                <input
+                                        class="product_cart_items_to_add_no"
+                                        type="number"
+                                        value="1"
+                                />
+                                <button class="product_cart_increase_items_button">-</button>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
+                                <path
+                                        fill="currentColor"
+                                        d="m2.449 14.398l.447-.224zm10.102 0l.447.224zM.703 6h13.594V5H.703zM14 5.703v.439h1v-.439zM12.386 14H2.614v1h9.772zM1 6.142v-.439H0v.439zm1.896 8.032A17.96 17.96 0 0 1 1 6.142H0c0 2.944.685 5.847 2.002 8.48zM2.614 14c.12 0 .229.068.282.174l-.894.448a.69.69 0 0 0 .612.378zm9.49.174a.32.32 0 0 1 .282-.174v1c.26 0 .496-.146.612-.378zM14 6.142c0 2.788-.65 5.538-1.896 8.032l.894.448A18.96 18.96 0 0 0 15 6.142zM14.297 6A.297.297 0 0 1 14 5.703h1A.703.703 0 0 0 14.297 5zM.703 5A.703.703 0 0 0 0 5.703h1A.297.297 0 0 1 .703 6zm3.226.757l3-5L6.07.243l-3 5zm4.142-5l3 5l.858-.514l-3-5zM7 7v5h1V7zm-2 3h5V9H5z"
+                                />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
     <div class="row how_it_works_div" style="margin-top: 150px;">
-        <div class="col-11 col-sm-9 col-md-10 col-lg-9 col-xl-8" style="margin: auto;border: 1px solid rgb(206, 206, 206);box-sizing: border-box;border-radius: 10px;">
+        <div class="col-11 col-sm-9 col-md-10 col-lg-9 col-xl-8"
+             style="margin: auto;border: 1px solid rgb(206, 206, 206);box-sizing: border-box;border-radius: 10px;">
             <h2 class="how_it_works_div_title">How It Works</h2>
             <div class="row" style="margin-bottom: 5px;">
                 <div class="col-12 col-md-6" style="margin-top: 8px;">
@@ -43,10 +140,12 @@
                             <h4>1. Register</h4>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="M6.196 17.485q1.275-.918 2.706-1.451Q10.332 15.5 12 15.5t3.098.534t2.706 1.45q.99-1.025 1.593-2.42Q20 13.667 20 12q0-3.325-2.337-5.663T12 4T6.337 6.338T4 12q0 1.667.603 3.064q.603 1.396 1.593 2.42M12 12.5q-1.263 0-2.132-.868T9 9.5t.868-2.132T12 6.5t2.132.868T15 9.5t-.868 2.132T12 12.5m0 8.5q-1.883 0-3.525-.701t-2.858-1.916t-1.916-2.858T3 12t.701-3.525t1.916-2.858q1.216-1.215 2.858-1.916T12 3t3.525.701t2.858 1.916t1.916 2.858T21 12t-.701 3.525t-1.916 2.858q-1.216 1.215-2.858 1.916T12 21" />
+                                    <path fill="currentColor"
+                                          d="M6.196 17.485q1.275-.918 2.706-1.451Q10.332 15.5 12 15.5t3.098.534t2.706 1.45q.99-1.025 1.593-2.42Q20 13.667 20 12q0-3.325-2.337-5.663T12 4T6.337 6.338T4 12q0 1.667.603 3.064q.603 1.396 1.593 2.42M12 12.5q-1.263 0-2.132-.868T9 9.5t.868-2.132T12 6.5t2.132.868T15 9.5t-.868 2.132T12 12.5m0 8.5q-1.883 0-3.525-.701t-2.858-1.916t-1.916-2.858T3 12t.701-3.525t1.916-2.858q1.216-1.215 2.858-1.916T12 3t3.525.701t2.858 1.916t1.916 2.858T21 12t-.701 3.525t-1.916 2.858q-1.216 1.215-2.858 1.916T12 21"/>
                                 </svg>
                                 <p>
-                                    Create an account to unlock exclusive features. Simply  fill out our form, verify your email, and start exploring  our diverse range of products tailored just for you.
+                                    Create an account to unlock exclusive features. Simply fill out our form, verify
+                                    your email, and start exploring our diverse range of products tailored just for you.
                                 </p>
                             </div>
                         </div>
@@ -54,10 +153,12 @@
                             <h4>2. Browse</h4>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="M6.196 17.485q1.275-.918 2.706-1.451Q10.332 15.5 12 15.5t3.098.534t2.706 1.45q.99-1.025 1.593-2.42Q20 13.667 20 12q0-3.325-2.337-5.663T12 4T6.337 6.338T4 12q0 1.667.603 3.064q.603 1.396 1.593 2.42M12 12.5q-1.263 0-2.132-.868T9 9.5t.868-2.132T12 6.5t2.132.868T15 9.5t-.868 2.132T12 12.5m0 8.5q-1.883 0-3.525-.701t-2.858-1.916t-1.916-2.858T3 12t.701-3.525t1.916-2.858q1.216-1.215 2.858-1.916T12 3t3.525.701t2.858 1.916t1.916 2.858T21 12t-.701 3.525t-1.916 2.858q-1.216 1.215-2.858 1.916T12 21" />
+                                    <path fill="currentColor"
+                                          d="M6.196 17.485q1.275-.918 2.706-1.451Q10.332 15.5 12 15.5t3.098.534t2.706 1.45q.99-1.025 1.593-2.42Q20 13.667 20 12q0-3.325-2.337-5.663T12 4T6.337 6.338T4 12q0 1.667.603 3.064q.603 1.396 1.593 2.42M12 12.5q-1.263 0-2.132-.868T9 9.5t.868-2.132T12 6.5t2.132.868T15 9.5t-.868 2.132T12 12.5m0 8.5q-1.883 0-3.525-.701t-2.858-1.916t-1.916-2.858T3 12t.701-3.525t1.916-2.858q1.216-1.215 2.858-1.916T12 3t3.525.701t2.858 1.916t1.916 2.858T21 12t-.701 3.525t-1.916 2.858q-1.216 1.215-2.858 1.916T12 21"/>
                                 </svg>
                                 <p>
-                                    Explore our catalog, search for items, and view detailed  descriptions, and images to make informed  decisions.
+                                    Explore our catalog, search for items, and view detailed descriptions, and images to
+                                    make informed decisions.
                                 </p>
                             </div>
                         </div>
@@ -69,10 +170,12 @@
                             <h4>3. Place Your Order</h4>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="M6.196 17.485q1.275-.918 2.706-1.451Q10.332 15.5 12 15.5t3.098.534t2.706 1.45q.99-1.025 1.593-2.42Q20 13.667 20 12q0-3.325-2.337-5.663T12 4T6.337 6.338T4 12q0 1.667.603 3.064q.603 1.396 1.593 2.42M12 12.5q-1.263 0-2.132-.868T9 9.5t.868-2.132T12 6.5t2.132.868T15 9.5t-.868 2.132T12 12.5m0 8.5q-1.883 0-3.525-.701t-2.858-1.916t-1.916-2.858T3 12t.701-3.525t1.916-2.858q1.216-1.215 2.858-1.916T12 3t3.525.701t2.858 1.916t1.916 2.858T21 12t-.701 3.525t-1.916 2.858q-1.216 1.215-2.858 1.916T12 21" />
+                                    <path fill="currentColor"
+                                          d="M6.196 17.485q1.275-.918 2.706-1.451Q10.332 15.5 12 15.5t3.098.534t2.706 1.45q.99-1.025 1.593-2.42Q20 13.667 20 12q0-3.325-2.337-5.663T12 4T6.337 6.338T4 12q0 1.667.603 3.064q.603 1.396 1.593 2.42M12 12.5q-1.263 0-2.132-.868T9 9.5t.868-2.132T12 6.5t2.132.868T15 9.5t-.868 2.132T12 12.5m0 8.5q-1.883 0-3.525-.701t-2.858-1.916t-1.916-2.858T3 12t.701-3.525t1.916-2.858q1.216-1.215 2.858-1.916T12 3t3.525.701t2.858 1.916t1.916 2.858T21 12t-.701 3.525t-1.916 2.858q-1.216 1.215-2.858 1.916T12 21"/>
                                 </svg>
                                 <p>
-                                    Add items to cart and proceed to checkout to review your order. Clicking 'Checkout' will open a WhatsApp chat with the seller to finalize payment and shipping details.
+                                    Add items to cart and proceed to checkout to review your order. Clicking 'Checkout'
+                                    will open a WhatsApp chat with the seller to finalize payment and shipping details.
                                 </p>
                             </div>
                         </div>
@@ -80,10 +183,12 @@
                             <h4>4. Get It Delivered</h4>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="M6.196 17.485q1.275-.918 2.706-1.451Q10.332 15.5 12 15.5t3.098.534t2.706 1.45q.99-1.025 1.593-2.42Q20 13.667 20 12q0-3.325-2.337-5.663T12 4T6.337 6.338T4 12q0 1.667.603 3.064q.603 1.396 1.593 2.42M12 12.5q-1.263 0-2.132-.868T9 9.5t.868-2.132T12 6.5t2.132.868T15 9.5t-.868 2.132T12 12.5m0 8.5q-1.883 0-3.525-.701t-2.858-1.916t-1.916-2.858T3 12t.701-3.525t1.916-2.858q1.216-1.215 2.858-1.916T12 3t3.525.701t2.858 1.916t1.916 2.858T21 12t-.701 3.525t-1.916 2.858q-1.216 1.215-2.858 1.916T12 21" />
+                                    <path fill="currentColor"
+                                          d="M6.196 17.485q1.275-.918 2.706-1.451Q10.332 15.5 12 15.5t3.098.534t2.706 1.45q.99-1.025 1.593-2.42Q20 13.667 20 12q0-3.325-2.337-5.663T12 4T6.337 6.338T4 12q0 1.667.603 3.064q.603 1.396 1.593 2.42M12 12.5q-1.263 0-2.132-.868T9 9.5t.868-2.132T12 6.5t2.132.868T15 9.5t-.868 2.132T12 12.5m0 8.5q-1.883 0-3.525-.701t-2.858-1.916t-1.916-2.858T3 12t.701-3.525t1.916-2.858q1.216-1.215 2.858-1.916T12 3t3.525.701t2.858 1.916t1.916 2.858T21 12t-.701 3.525t-1.916 2.858q-1.216 1.215-2.858 1.916T12 21"/>
                                 </svg>
                                 <p>
-                                    Relax as we fulfill your order. Get real-time updates on  processing, shipment, and delivery, including package  tracking for your convenience.
+                                    Relax as we fulfill your order. Get real-time updates on processing, shipment, and
+                                    delivery, including package tracking for your convenience.
                                 </p>
                             </div>
                         </div>
@@ -92,7 +197,7 @@
             </div>
         </div>
     </div>
-    
+
     <div style="margin-top: 150px;">
         <div class="row">
             <div class="col-11 col-sm-10 col-md-9 col-lg-8 col-xl-6 about_us_div">
@@ -100,34 +205,23 @@
                 <hr>
                 <div class="row" style="box-sizing: border-box;width: 100%;">
                     <div class="col-12 col-md-6 about_us_logo_div">
-                        <img src="/../media/app_files/logo_colored.png" alt="">
+                        <img src="{% static 'app_files/logo_colored.png' %}" alt="">
                     </div>
                     <div class="col-12 col-md-6 about_us_text_div">
                         <p>
-                            GigaMart is a leading retailer specializing in a comprehensive range of electronics, from the latest smartphones and tablets to high-definition TVs, computers, and more. Known for its dedication to quality, GigaMart offers customers a one-stop shop for all their tech needs, whether they’re looking to upgrade their home entertainment system, enhance productivity with a new laptop, or stay connected with the latest in mobile technology. GigaMart's commitment to customer satisfaction is reflected in its knowledgeable staff, competitive pricing, and a strong focus on providing reliable, top-notch products from trusted brands.
+                            GigaMart is a leading retailer specializing in a comprehensive range of electronics, from
+                            the latest smartphones and tablets to high-definition TVs, computers, and more. Known for
+                            its dedication to quality, GigaMart offers customers a one-stop shop for all their tech
+                            needs, whether they’re looking to upgrade their home entertainment system, enhance
+                            productivity with a new laptop, or stay connected with the latest in mobile technology.
+                            GigaMart's commitment to customer satisfaction is reflected in its knowledgeable staff,
+                            competitive pricing, and a strong focus on providing reliable, top-notch products from
+                            trusted brands.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        const cardsWrapper = document.querySelector('.category-cards-wrapper');
-        const cardWidth = document.querySelector('.category_card').offsetWidth + 10; // Card width plus gap
-        let currentIndex = 0;
-
-        function moveCard(direction) {
-            const totalWidth = cardsWrapper.scrollWidth;
-
-            if (direction === 'left' && currentIndex > 0) {
-                currentIndex--;
-            } else if (direction === 'right' && currentIndex < (totalWidth / cardWidth - 1)) {
-                currentIndex++;
-            }
-
-            cardsWrapper.scrollLeft = currentIndex * cardWidth;
-        }
-    </script>
 
 {% endblock %}
