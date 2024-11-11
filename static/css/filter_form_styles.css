@@ -1,9 +1,10 @@
 @media (max-width: 768px) {
     #large-screen-filter-form-div {
-        display: none!important;
+        display: none !important;
     }
+
     #small-screen-filter-form-div {
-        display: block!important;
+        display: block !important;
     }
 }
 
@@ -60,6 +61,7 @@
     font-size: 17px;
     font-weight: bold;
 }
+
 #small-screen-filter-form input[type="number"], #large-screen-filter-form input[type="number"] {
     padding: 0.4rem;
     box-sizing: border-box;
@@ -73,7 +75,34 @@
     padding: 0.4rem;
     box-sizing: border-box;
 }
+
 #small-screen-filter-form input[type="range"], #large-screen-filter-form input[type="range"] {
     width: 100%;
+}
+
+.pagination, .pagination-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #6490ff;
+}
+
+.pagination-center {
+    margin: 0;
+    padding: 0;
+}
+
+.pagination button, .pagination-center button {
+    padding: 7px 15px;
+    border: 1px solid white;
+    border-radius: 3px;
+    margin: 0 5px;
 }
 

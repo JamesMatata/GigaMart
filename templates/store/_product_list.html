@@ -53,4 +53,50 @@
             </div>
         </div>
     {% endfor %}
+    {% if products.paginator.num_pages > 1 %}
+        <div class="pagination">
+            <!-- First and Previous buttons, disabled if there's no previous page -->
+            {% if products.has_previous %}
+                <button value="1" class="pagination-link">
+                    First
+                </button>
+                <button value="{{ products.previous_page_number }}" class="pagination-link">
+                    Previous
+                </button>
+            {% else %}
+                <button disabled class="pagination-link">First</button>
+                <button disabled class="pagination-link">Previous</button>
+            {% endif %}
+
+            <!-- Center pagination buttons: previous page, current page, and next page -->
+            <div class="pagination-center">
+                {% if products.number > 1 %}
+                    <button value="{{ products.number|add:"-1" }}"
+                            class="pagination-link">{{ products.number|add:"-1" }}</button>
+                {% else %}
+                    <button disabled class="pagination-link">-</button>
+                {% endif %}
+
+                <!-- Current page, highlighted as active -->
+                <button value="{{ products.number }}" class="pagination-link active">{{ products.number }}</button>
+
+                {% if products.number < products.paginator.num_pages %}
+                    <button value="{{ products.number|add:"1" }}"
+                            class="pagination-link">{{ products.number|add:"1" }}</button>
+                {% else %}
+                    <button disabled class="pagination-link">-</button>
+                {% endif %}
+            </div>
+
+            <!-- Next and Last buttons, disabled if there's no next page -->
+            {% if products.has_next %}
+                <button value="{{ products.next_page_number }}" class="pagination-link">Next</button>
+                <button value="{{ products.paginator.num_pages }}" class="pagination-link">Last</button>
+            {% else %}
+                <button disabled class="pagination-link">Next</button>
+                <button disabled class="pagination-link">Last</button>
+            {% endif %}
+        </div>
+    {% endif %}
+
 </div>

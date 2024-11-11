@@ -21,32 +21,73 @@ document.getElementById('filter-toggle-btn')?.addEventListener('click', function
     }
 });
 
-// Function to collect filter values and send AJAX request
+// Function to update pagination buttons
+function updatePaginationButtons(html) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    // Get the updated pagination div from the response
+    const updatedPagination = doc.querySelector('.pagination');
+
+    // Update the current pagination div
+    const paginationDiv = document.querySelector('.pagination');
+    if(paginationDiv) {
+        paginationDiv.innerHTML = updatedPagination.innerHTML;
+        // Now, we need to update the active class on the correct page number
+        const buttons = paginationDiv.querySelectorAll('.pagination-link');
+
+        buttons.forEach(button => {
+            // Remove the active class from all buttons
+            button.classList.remove('active');
+
+            // Add the active class to the button that corresponds to the current page
+            if (button.getAttribute('value') === getCurrentPage()) {
+                button.classList.add('active');
+            }
+        });
+    }
+
+}
+
+
+// Function to get current filter parameters as URLSearchParams
+function getCurrentFilterParams(form) {
+    const isLargeScreen = window.innerWidth > 768;
+    if(!isLargeScreen) {
+        const formData = new FormData(document.getElementById('small-screen-filter-form'));
+        return new URLSearchParams(formData);
+    }
+    if(isLargeScreen) {
+        const formData = new FormData(document.getElementById('large-screen-filter-form'));
+        return new URLSearchParams(formData);
+    }
+}
+
+// Apply filters and handle pagination with AJAX
 function applyFilters(form) {
-    const formData = new FormData(form);
-    const params = new URLSearchParams(formData).toString(); // Convert form data to URL parameters
+    const params = getCurrentFilterParams(form).toString();
 
     fetch(`${window.location.pathname}?${params}`, {
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    })
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('product-list-div').innerHTML = html;
+
+        // Update pagination links to include current filter parameters
+        updatePaginationButtons(html);
+
+        // Close filter form on small screens
+        const filterForm = document.getElementById('small-screen-filter-form');
+        const toggleIcon = document.getElementById('toggle-icon');
+        if (filterForm) {
+            filterForm.style.display = 'none';
+            toggleIcon.classList.replace('fa-chevron-up', 'fa-chevron-down');
         }
     })
-        .then(response => response.text())
-        .then(html => {
-            // Update only the product list section with new HTML (excluding the filter form)
-            document.getElementById('product-list-div').innerHTML = html;
-
-            // Close the filter form after submission (for small screens)
-            const filterForm = document.getElementById('small-screen-filter-form');
-            const toggleIcon = document.getElementById('toggle-icon');
-            if (filterForm) {
-                filterForm.style.display = 'none';
-                toggleIcon.classList.remove('fa-chevron-up');
-                toggleIcon.classList.add('fa-chevron-down');
-            }
-        })
-        .catch(error => console.error('Error fetching filtered products:', error));
+    .catch(error => console.error('Error fetching filtered products:', error));
 }
+
 
 // Price range logic
 const smallPriceRange = document.getElementById('small_price_range');
@@ -168,8 +209,61 @@ document.getElementById('large-screen-filter-form').addEventListener('change', f
     initializeFilters()
 });
 
-// Call initializeFilters on page load
-document.addEventListener('DOMContentLoaded', initializeFilters);
+// Update filters and pagination dynamically without reloading
+document.addEventListener('DOMContentLoaded', () => {
+    restoreFilterState();
+    initializeFilters();
 
-// Add event listener to handle screen resize
-window.addEventListener('resize', initializeFilters);
+    window.addEventListener('resize', initializeFilters);
+});
+
+
+// Pagination handling with AJAX
+document.addEventListener('click', event => {
+    if (event.target.matches('.pagination-link')) {
+        event.preventDefault();  // Prevent default button behavior
+
+        // Get the page number from the button's value attribute
+        const page = event.target.getAttribute('value');
+        console.log("Page clicked:", page);  // Log the clicked page number
+
+        // Construct the URL based on the current filters and the page number
+        const form = document.getElementById('small-screen-filter-form') || document.getElementById('large-screen-filter-form');
+
+        // Collect current filter parameters from the form
+        const params = new URLSearchParams(getCurrentFilterParams(form));
+
+        // Add the page number to the filter parameters
+        params.set('page', page);  // Set the clicked page number to the URL
+
+        // Construct the URL with the updated search parameters
+        const url = new URL(window.location.href);
+        url.search = params.toString();  // Update the URL with new search params
+
+        console.log("Final URL with page:", url.href);  // Log the final URL to check
+
+        // Perform an AJAX request with the updated URL
+        fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.text())
+        .then(html => {
+            // Update the product list dynamically with the new HTML content
+            document.getElementById('product-list-div').innerHTML = html;
+
+            // Update the pagination buttons after the content is loaded
+            updatePaginationButtons(html);
+        })
+        .catch(error => {
+            console.error('Error fetching paginated products:', error);
+        });
+    }
+});
+
+// Function to get the current page from the URL
+function getCurrentPage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('page') || 1;  // Default to page 1 if not present
+}

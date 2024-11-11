@@ -3,6 +3,12 @@
 {% block title %}{{ category.name }} | GigaMart{% endblock %}
 
 {% block main %}
+    <style>
+        .active {
+            background-color: red;
+        }
+    </style>
+
     <div class="container" style="margin-top: 100px">
         <div style="width: 100%;padding: 15px;background-color: #6490ff;box-sizing: border-box;border-radius: 10px 10px 0 0;">
             <h3 style="font-size: 20px;color: white;font-weight: 500;margin: 0;">{{ category.name }}</h3>
@@ -51,15 +57,16 @@
                 <form id="large-screen-filter-form">
                     <!-- Price Range -->
                     <div class="filter-group">
-                            <h3 class="filter_section_title">Price Range:</h3>
-                            
+                        <h3 class="filter_section_title">Price Range:</h3>
+
 
                         <input type="range" id="large_price_range" name="price_range" min="0" max="500000" step="50"
                                value="500000">
                         <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
                             <input style="display: inline-block;" type="number" id="large_price_min" name="price_min"
                                    placeholder="Min Price" max="500000">
-                            <input type="number" id="large_price_max" name="price_max" placeholder="Max Price" max="500000">
+                            <input type="number" id="large_price_max" name="price_max" placeholder="Max Price"
+                                   max="500000">
                         </div>
                     </div>
 
@@ -106,24 +113,26 @@
                     </div>
                 </form>
             </div>
-            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3" id="small-screen-filter-form-div" style="display: none">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3" id="small-screen-filter-form-div"
+                 style="display: none">
                 <!-- Dropdown button with icon -->
                 <button id="filter-toggle-btn" class="filter-toggle-btn"
                         style="background-color: #6490ff; border-radius: 3px; padding: 5px 10px; border: 1px solid white; color: white; width: 100%; display: flex; justify-content: space-between; align-items: center;">
                     <span>Filter Options</span>
                     <i id="toggle-icon" class="fas fa-chevron-down"></i>
                 </button>
-            
+
                 <form id="small-screen-filter-form" style="display: none; margin-top: 10px;">
                     <div class="filter-group">
-                        <h3 class="filter_section_title">Price Range:</h3>  
+                        <h3 class="filter_section_title">Price Range:</h3>
 
                         <input type="range" id="small_price_range" name="price_range" min="0" max="500000" step="50"
                                value="500000">
                         <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
                             <input style="display: inline-block;" type="number" id="small_price_min" name="price_min"
                                    placeholder="Min Price" max="500000">
-                            <input type="number" id="small_price_max" name="price_max" placeholder="Max Price" max="500000">
+                            <input type="number" id="small_price_max" name="price_max" placeholder="Max Price"
+                                   max="500000">
                         </div>
                     </div>
 
@@ -233,9 +242,54 @@
                             </div>
                         </div>
                     {% endfor %}
+                    {% if products.paginator.num_pages > 1 %}
+                        <div class="pagination">
+                            <!-- First and Previous buttons, disabled if there's no previous page -->
+                            {% if products.has_previous %}
+                                <button value="1" class="pagination-link">
+                                    First
+                                </button>
+                                <button value="{{ products.previous_page_number }}" class="pagination-link">
+                                    Previous
+                                </button>
+                            {% else %}
+                                <button disabled class="pagination-link">First</button>
+                                <button disabled class="pagination-link">Previous</button>
+                            {% endif %}
+
+                            <!-- Center pagination buttons: previous page, current page, and next page -->
+                            <div class="pagination-center">
+                                {% if products.number > 1 %}
+                                    <button value="{{ products.number|add:"-1" }}"
+                                            class="pagination-link">{{ products.number|add:"-1" }}</button>
+                                {% else %}
+                                    <button disabled class="pagination-link">-</button>
+                                {% endif %}
+
+                                <!-- Current page, highlighted as active -->
+                                <button value="{{ products.number }}"
+                                        class="pagination-link active">{{ products.number }}</button>
+
+                                {% if products.number < products.paginator.num_pages %}
+                                    <button value="{{ products.number|add:"1" }}"
+                                            class="pagination-link">{{ products.number|add:"1" }}</button>
+                                {% else %}
+                                    <button disabled class="pagination-link">-</button>
+                                {% endif %}
+                            </div>
+
+                            <!-- Next and Last buttons, disabled if there's no next page -->
+                            {% if products.has_next %}
+                                <button value="{{ products.next_page_number }}" class="pagination-link">Next</button>
+                                <button value="{{ products.paginator.num_pages }}" class="pagination-link">Last</button>
+                            {% else %}
+                                <button disabled class="pagination-link">Next</button>
+                                <button disabled class="pagination-link">Last</button>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
                 </div>
-
-
             </div>
         </div>
     </div>

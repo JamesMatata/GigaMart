@@ -49,14 +49,26 @@ def category_list(request, category_slug):
     if arrival == 'newest':
         products = products.order_by('-id')
 
-    # Check for AJAX request and only render product list if true
+    # Pagination settings
+    paginator = Paginator(products, 1)  # Adjust items per page as needed
+    page_number = request.GET.get('page')
+
+    try:
+        paginated_products = paginator.page(page_number)
+    except PageNotAnInteger:
+        paginated_products = paginator.page(1)
+    except EmptyPage:
+        paginated_products = paginator.page(paginator.num_pages)
+
+    # Return partial template if request is AJAX
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return render(request, 'store/_product_list.html', {'products': products})
+        return render(request, 'store/_product_list.html', {'products': paginated_products})
 
     return render(request, 'store/category.html', {
         'category': category,
         'subcategories': subcategories,
-        'products': products,
+        'products': paginated_products,
+        'page_obj': paginated_products
     })
 
 
@@ -92,23 +104,24 @@ def subcategory_list(request, category_slug, subcategory_slug):
     if arrival == 'newest':
         products = products.order_by('-id')
 
-    # Paginate products
-    paginator = Paginator(products, 30)  # Show 30 products per page
-    page = request.GET.get('page')
+    # Pagination settings
+    paginator = Paginator(products, 1)  # Adjust items per page as needed
+    page_number = request.GET.get('page')
 
     try:
-        products = paginator.page(page)
+        paginated_products = paginator.page(page_number)
     except PageNotAnInteger:
-        products = paginator.page(1)
+        paginated_products = paginator.page(1)
     except EmptyPage:
-        products = paginator.page(paginator.num_pages)
+        paginated_products = paginator.page(paginator.num_pages)
 
-    # Check for AJAX request and only render product list if true
+    # Return partial template if request is AJAX
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return render(request, 'store/_product_list.html', {'products': products})
+        return render(request, 'store/_product_list.html', {'products': paginated_products})
 
     return render(request, 'store/subcategory.html', {
         'category': category,
         'subcategory': subcategory,
-        'products': products,
+        'products': paginated_products,
+        'page_obj': paginated_products
     })
