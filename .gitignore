@@ -1,0 +1,14 @@
+.venv/
+.env
+
+db.sqlite3
+
+# Ignore Django migrations
+migrations/
+*/migrations/*
+
+# Ignore IDEs and editors
+.vscode/
+.idea/
+
+media
