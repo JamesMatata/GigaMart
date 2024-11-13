@@ -9,4 +9,5 @@ urlpatterns = [
     path('get-subcategories/<int:category_id>/', views.get_subcategories, name='get_subcategories'),
     path('category/<str:category_slug>/', views.category_list, name='category_list'),
     path('category/<str:category_slug>/<str:subcategory_slug>/', views.subcategory_list, name='subcategory_list'),
+    path('product/<slug:slug>/', views.product_detail, name='product_detail'),
 ]

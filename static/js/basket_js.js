@@ -1,0 +1,119 @@
+calculateTotalCost();
+
+function calculateTotalCost() {
+    const totalCostElement = document.getElementById("total-costs");
+    const totalCostElementInput = document.getElementById("total-costs-input");
+    let subtotal = 0;
+
+    // Loop through each product item to calculate the subtotal
+    document.querySelectorAll('.product-item').forEach(item => {
+        const quantity = parseInt(item.querySelector('.quantity').value);
+        const price = parseFloat(item.querySelector('.price').textContent);
+        subtotal += quantity * price;
+    });
+
+    // Update the total cost elements
+    totalCostElement.textContent = 'KES ' + subtotal.toFixed(2);
+    totalCostElementInput.value = subtotal.toFixed(2);
+}
+
+function updateSummarySection(basketItems) {
+    const summaryTable = document.querySelector(".basket_summary_div table");
+
+    // Clear existing rows before updating
+    summaryTable.querySelectorAll("tr.basket_summary_item").forEach(row => row.remove());
+
+    // Ensure basketItems is defined and an array
+    if (basketItems && Array.isArray(basketItems)) {
+        basketItems.forEach(item => {
+            const row = document.createElement("tr");
+            row.classList.add("basket_summary_item");
+            row.style.display = "flex";
+
+            row.innerHTML = `
+                <td class="basket_summary_td" style="flex: 1;">
+                    <p class="basket_summary_product_title">${item.product_name}</p>
+                </td>
+                <td class="basket_summary_td quantity" style="width: 45px;">${item.qty}</td>
+                <td class="basket_summary_td price" style="width: 100px;overflow: hidden;">KES ${item.price.toFixed(2)}</td>
+            `;
+
+            summaryTable.appendChild(row);
+        });
+    }
+
+    // Recalculate the total cost after updating the summary section
+    calculateTotalCost();
+}
+
+// Delete Item
+$(document).on('click', '.delete-button', function (e) {
+    e.preventDefault();
+    const productId = $(this).data('index');
+    const deleteUrl = $(this).data('delete-url'); // Ensure delete URL is set correctly
+
+    $.ajax({
+        type: 'POST',
+        url: deleteUrl,
+        headers: { 'X-CSRFToken': getCSRFToken() }, // Add CSRF token here
+        data: JSON.stringify({ productid: productId }),
+        contentType: 'application/json',  // Ensure data type matches expected JSON format
+        success: function (json) {
+            $(`.product-item[data-index="${productId}"]`).remove();
+            document.getElementById("basket-qty").innerHTML = json.qty;
+            updateSummarySection(json.basket_items);
+
+            if (json.qty === 0) {
+                document.querySelector('.container').innerHTML = `
+                    <p id="no-items-in-basket" style="margin-bottom: 400px; margin-top: 20px; text-align: center; font-size: 18px;">
+                        Your basket is empty <a href="{% url 'store:index' %}">Shop</a>
+                    </p>`;
+            }
+
+            calculateTotalCost();
+        },
+        error: function (xhr) {
+            console.log('Error: ' + xhr.responseText);
+        }
+    });
+});
+
+$(document).on('click', '.update-button', function (e) {
+    e.preventDefault();
+    const productId = $(this).data('index');
+    const quantity = $(`#quantity${productId}`).val();
+    const updateUrl = $(this).data('update-url'); // Ensure update URL is set correctly
+
+    $.ajax({
+        type: 'POST',
+        url: updateUrl,
+        headers: { 'X-CSRFToken': getCSRFToken() }, // Add CSRF token here
+        data: JSON.stringify({ productid: productId, productqty: quantity }),
+        contentType: 'application/json',  // Ensure data type matches expected JSON format
+        success: function (json) {
+            document.getElementById("basket-qty").innerHTML = json.qty;
+            updateSummarySection(json.basket_items);
+        },
+        error: function (xhr) {
+            console.log('Error: ' + xhr.responseText);
+        }
+    });
+});
+
+
+function getCSRFToken() {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, 10) === 'csrftoken=') {
+                cookieValue = decodeURIComponent(cookie.substring(10));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+

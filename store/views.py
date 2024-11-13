@@ -125,3 +125,11 @@ def subcategory_list(request, category_slug, subcategory_slug):
         'products': paginated_products,
         'page_obj': paginated_products
     })
+
+
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    context = {
+        'product': product,
+    }
+    return render(request, 'store/product_page.html', context)

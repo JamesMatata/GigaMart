@@ -87,6 +87,7 @@
 }
 .product_card {
     max-width: 250px;
+    box-sizing: border-box;
 }
 .grid_product_card {
     width: 100%;

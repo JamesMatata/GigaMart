@@ -16,7 +16,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     '119b-41-89-22-3.ngrok-free.app',
-    '127.0.0.1'
+    '127.0.0.1',
+    'localhost'
 ]
 
 
@@ -31,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'store',
+    'basket',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +60,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'store.context_processors.category_context',
+                'basket.context_processors.basket',
             ],
         },
     },

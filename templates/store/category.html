@@ -71,15 +71,17 @@
                     </div>
 
                     <!-- Subcategories -->
-                    <div class="filter-group">
-                        <h3 class="filter_section_title">Subcategories:</h3>
-                        <div id="subcategory-options" class="filter-options subcategories_div">
-                            {% for subcategory in subcategories %}
-                                <label><input type="checkbox" name="subcategory"
-                                              value="{{ subcategory.slug }}"> {{ subcategory.name }}</label>
-                            {% endfor %}
+                    {% if subcategories %}
+                        <div class="filter-group">
+                            <h3 class="filter_section_title">Subcategories:</h3>
+                            <div id="subcategory-options" class="filter-options subcategories_div">
+                                {% for subcategory in subcategories %}
+                                    <label><input type="checkbox" name="subcategory"
+                                                  value="{{ subcategory.slug }}"> {{ subcategory.name }}</label>
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
 
                     <!-- Discount Offer -->
                     <div class="filter-group">
@@ -137,15 +139,17 @@
                     </div>
 
                     <!-- Subcategories -->
-                    <div class="filter-group">
-                        <h3 class="filter_section_title">Subcategories:</h3>
-                        <div id="subcategory-options" class="filter-options subcategories_div">
-                            {% for subcategory in subcategories %}
-                                <label><input type="checkbox" name="subcategory"
-                                              value="{{ subcategory.slug }}"> {{ subcategory.name }}</label>
-                            {% endfor %}
+                    {% if subcategories %}
+                        <div class="filter-group">
+                            <h3 class="filter_section_title">Subcategories:</h3>
+                            <div id="subcategory-options" class="filter-options subcategories_div">
+                                {% for subcategory in subcategories %}
+                                    <label><input type="checkbox" name="subcategory"
+                                                  value="{{ subcategory.slug }}"> {{ subcategory.name }}</label>
+                                {% endfor %}
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
 
                     <!-- Discount Offer -->
                     <div class="filter-group">
@@ -196,7 +200,7 @@
                                 </div>
                                 <div class="details_div">
                                     <p class="product_title">
-                                        <a href="#">{{ item.name }}</a>
+                                        <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
                                     </p>
                                     <p class="product_price">
                                         KES <span>{{ item.price }}</span>
@@ -247,14 +251,28 @@
                             <!-- First and Previous buttons, disabled if there's no previous page -->
                             {% if products.has_previous %}
                                 <button value="1" class="pagination-link">
-                                    First
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor"
+                                              d="m9 2l1.3 1.3L3.7 10l6.6 6.7L9 18l-8-8zm8.5 0L19 3.3L12.2 10l6.7 6.7l-1.4 1.3l-8-8z"/>
+                                    </svg>
                                 </button>
                                 <button value="{{ products.previous_page_number }}" class="pagination-link">
-                                    Previous
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor" d="m4 10l9 9l1.4-1.5L7 10l7.4-7.5L13 1z"/>
+                                    </svg>
                                 </button>
                             {% else %}
-                                <button disabled class="pagination-link">First</button>
-                                <button disabled class="pagination-link">Previous</button>
+                                <button disabled class="pagination-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor"
+                                              d="m9 2l1.3 1.3L3.7 10l6.6 6.7L9 18l-8-8zm8.5 0L19 3.3L12.2 10l6.7 6.7l-1.4 1.3l-8-8z"/>
+                                    </svg>
+                                </button>
+                                <button disabled class="pagination-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor" d="m4 10l9 9l1.4-1.5L7 10l7.4-7.5L13 1z"/>
+                                    </svg>
+                                </button>
                             {% endif %}
 
                             <!-- Center pagination buttons: previous page, current page, and next page -->
@@ -280,15 +298,32 @@
 
                             <!-- Next and Last buttons, disabled if there's no next page -->
                             {% if products.has_next %}
-                                <button value="{{ products.next_page_number }}" class="pagination-link">Next</button>
-                                <button value="{{ products.paginator.num_pages }}" class="pagination-link">Last</button>
+                                <button value="{{ products.next_page_number }}" class="pagination-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor" d="M7 1L5.6 2.5L13 10l-7.4 7.5L7 19l9-9z"/>
+                                    </svg>
+                                </button>
+                                <button value="{{ products.paginator.num_pages }}" class="pagination-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor"
+                                              d="M11 2L9.7 3.3l6.6 6.7l-6.6 6.7L11 18l8-8zM2.5 2L1 3.3L7.8 10l-6.7 6.7L2.5 18l8-8z"/>
+                                    </svg>
+                                </button>
                             {% else %}
-                                <button disabled class="pagination-link">Next</button>
-                                <button disabled class="pagination-link">Last</button>
+                                <button disabled class="pagination-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor" d="M7 1L5.6 2.5L13 10l-7.4 7.5L7 19l9-9z"/>
+                                    </svg>
+                                </button>
+                                <button disabled class="pagination-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill="currentColor"
+                                              d="M11 2L9.7 3.3l6.6 6.7l-6.6 6.7L11 18l8-8zM2.5 2L1 3.3L7.8 10l-6.7 6.7L2.5 18l8-8z"/>
+                                    </svg>
+                                </button>
                             {% endif %}
                         </div>
                     {% endif %}
-
                 </div>
             </div>
         </div>

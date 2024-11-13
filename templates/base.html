@@ -10,12 +10,13 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/product_cards.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/filter_form_styles.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/product_page.css' %}"/>
     {% block extra_styles %}{% endblock %}
 </head>
 <body>
 <nav style="position: fixed;z-index: 999;width: 100%;top: 0">
     <div class="container-fluid main_nav">
-        <a  href="{% url 'store:index' %}">
+        <a href="{% url 'store:index' %}">
             <img src="{% static 'app_files/logo_colored.png' %}" alt="" style="width: 150px;display: inline-block;"/>
         </a>
         <div style="display: flex; flex-direction: row">
@@ -144,39 +145,39 @@
                 <div class="dropdown_menu" id="account_dropdown_menu">
                     {% if user.is_authenticated %}
                         <a href="#" class="account_dropdown_button_links">
-                        <span>Account</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <g
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-dasharray="28"
-                                    stroke-dashoffset="28"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                            >
-                                <path
-                                        d="M4 21v-1c0 -3.31 2.69 -6 6 -6h4c3.31 0 6 2.69 6 6v1"
+                            <span>Account</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <g
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-dasharray="28"
+                                        stroke-dashoffset="28"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
                                 >
-                                    <animate
-                                            fill="freeze"
-                                            attributeName="stroke-dashoffset"
-                                            dur="0.4s"
-                                            values="28;0"></animate>
-                                </path>
-                                <path
-                                        d="M12 11c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4Z"
-                                >
-                                    <animate
-                                            fill="freeze"
-                                            attributeName="stroke-dashoffset"
-                                            begin="0.4s"
-                                            dur="0.4s"
-                                            values="28;0"></animate>
-                                </path>
-                            </g>
-                        </svg>
-                    </a>
+                                    <path
+                                            d="M4 21v-1c0 -3.31 2.69 -6 6 -6h4c3.31 0 6 2.69 6 6v1"
+                                    >
+                                        <animate
+                                                fill="freeze"
+                                                attributeName="stroke-dashoffset"
+                                                dur="0.4s"
+                                                values="28;0"></animate>
+                                    </path>
+                                    <path
+                                            d="M12 11c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4Z"
+                                    >
+                                        <animate
+                                                fill="freeze"
+                                                attributeName="stroke-dashoffset"
+                                                begin="0.4s"
+                                                dur="0.4s"
+                                                values="28;0"></animate>
+                                    </path>
+                                </g>
+                            </svg>
+                        </a>
                         <a href="#" class="account_dropdown_button_links">
                             <span>Inquiries</span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
@@ -225,28 +226,41 @@
                         <hr/>
                         <a href="#" class="account_dropdown_auth_button">LogIn</a>
                     {% endif %}
-                    
+
                 </div>
             </div>
-            <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="45px"
-                    height="45px"
-                    color="white"
-                    viewBox="0 0 24 24"
-            >
-                <g fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path
-                            d="M3.864 16.455c-.858-3.432-1.287-5.147-.386-6.301S6.148 9 9.685 9h4.63c3.538 0 5.306 0 6.207 1.154s.472 2.87-.386 6.301c-.546 2.183-.818 3.274-1.632 3.91c-.814.635-1.939.635-4.189.635h-4.63c-2.25 0-3.375 0-4.189-.635c-.814-.636-1.087-1.727-1.632-3.91Z"></path>
-                    <path
-                            d="m19.5 9.5l-.71-2.605c-.274-1.005-.411-1.507-.692-1.886A2.5 2.5 0 0 0 17 4.172C16.56 4 16.04 4 15 4M4.5 9.5l.71-2.605c.274-1.005.411-1.507.692-1.886A2.5 2.5 0 0 1 7 4.172C7.44 4 7.96 4 9 4"></path>
-                    <path d="M9 4a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Z"></path>
-                    <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M4.5 18L12 9m7.5 9l-7-8.5m-8 .5L12 21l7.5-11"></path>
-                </g>
-            </svg>
+            <a href="{% url 'basket:basket_summary' %}"
+               style="text-decoration: none;display: flex;flex-direction: row;justify-content: center">
+                <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="45px"
+                        height="45px"
+                        color="white"
+                        viewBox="0 0 24 24"
+                >
+                    <g fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path
+                                d="M3.864 16.455c-.858-3.432-1.287-5.147-.386-6.301S6.148 9 9.685 9h4.63c3.538 0 5.306 0 6.207 1.154s.472 2.87-.386 6.301c-.546 2.183-.818 3.274-1.632 3.91c-.814.635-1.939.635-4.189.635h-4.63c-2.25 0-3.375 0-4.189-.635c-.814-.636-1.087-1.727-1.632-3.91Z"></path>
+                        <path
+                                d="m19.5 9.5l-.71-2.605c-.274-1.005-.411-1.507-.692-1.886A2.5 2.5 0 0 0 17 4.172C16.56 4 16.04 4 15 4M4.5 9.5l.71-2.605c.274-1.005.411-1.507.692-1.886A2.5 2.5 0 0 1 7 4.172C7.44 4 7.96 4 9 4"></path>
+                        <path d="M9 4a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Z"></path>
+                        <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M4.5 18L12 9m7.5 9l-7-8.5m-8 .5L12 21l7.5-11"></path>
+                    </g>
+                </svg>
+                {% with total_qty=basket|length %}
+                    <div id="basket-qty" class="basket-qty"
+                         style="width: 25px;height: 25px;border-radius: 20px;border: 1px solid white;color: red;display: flex;flex-direction: row;justify-content: center;align-items: center;font-size: 14px;margin-left: -15px;margin-bottom: -15px;background-color: white">
+                        {% if total_qty > 0 %}
+                            {{ total_qty }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </div>
+                {% endwith %}
+            </a>
         </div>
     </div>
 
@@ -281,12 +295,12 @@
                                     d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z"></path>
                         </g>
                     </svg>
-                    <a  href="{% url 'store:index' %}">
-                    <img
-                            src="{% static 'app_files/logo_colored.png' %}"
-                            alt=""
-                            style="width: 150px; margin-left: 5px"
-                    />
+                    <a href="{% url 'store:index' %}">
+                        <img
+                                src="{% static 'app_files/logo_colored.png' %}"
+                                alt=""
+                                style="width: 150px; margin-left: 5px"
+                        />
                     </a>
                 </div>
                 <div
@@ -316,26 +330,38 @@
                                 fill="currentColor"
                                 d="M16 7.992C16 3.58 12.416 0 8 0S0 3.58 0 7.992c0 2.43 1.104 4.62 2.832 6.09c.016.016.032.016.032.032c.144.112.288.224.448.336c.08.048.144.111.224.175A8 8 0 0 0 8.016 16a8 8 0 0 0 4.48-1.375c.08-.048.144-.111.224-.16c.144-.111.304-.223.448-.335c.016-.016.032-.016.032-.032c1.696-1.487 2.8-3.676 2.8-6.106m-8 7.001c-1.504 0-2.88-.48-4.016-1.279c.016-.128.048-.255.08-.383a4.2 4.2 0 0 1 .416-.991c.176-.304.384-.576.64-.816c.24-.24.528-.463.816-.639c.304-.176.624-.304.976-.4A4.2 4.2 0 0 1 8 10.342a4.18 4.18 0 0 1 2.928 1.166q.552.552.864 1.295q.168.432.24.911A7.03 7.03 0 0 1 8 14.993m-2.448-7.4a2.5 2.5 0 0 1-.208-1.024c0-.351.064-.703.208-1.023s.336-.607.576-.847s.528-.431.848-.575s.672-.208 1.024-.208c.368 0 .704.064 1.024.208s.608.336.848.575c.24.24.432.528.576.847c.144.32.208.672.208 1.023c0 .368-.064.704-.208 1.023a2.8 2.8 0 0 1-.576.848a2.8 2.8 0 0 1-.848.575a2.72 2.72 0 0 1-2.064 0a2.8 2.8 0 0 1-.848-.575a2.5 2.5 0 0 1-.56-.848zm7.424 5.306c0-.032-.016-.048-.016-.08a5.2 5.2 0 0 0-.688-1.406a4.9 4.9 0 0 0-1.088-1.135a5.2 5.2 0 0 0-1.04-.608a3 3 0 0 0 .464-.383a4.2 4.2 0 0 0 .624-.784a3.6 3.6 0 0 0 .528-1.934a3.7 3.7 0 0 0-.288-1.47a3.8 3.8 0 0 0-.816-1.199a3.9 3.9 0 0 0-1.2-.8a3.7 3.7 0 0 0-1.472-.287a3.7 3.7 0 0 0-1.472.288a3.6 3.6 0 0 0-1.2.815a3.8 3.8 0 0 0-.8 1.199a3.7 3.7 0 0 0-.288 1.47q0 .528.144 1.007c.096.336.224.64.4.927c.16.288.384.544.624.784q.216.216.48.383a5 5 0 0 0-1.04.624c-.416.32-.784.703-1.088 1.119a5 5 0 0 0-.688 1.406c-.016.032-.016.064-.016.08C1.776 11.636.992 9.91.992 7.992C.992 4.14 4.144.991 8 .991s7.008 3.149 7.008 7.001a6.96 6.96 0 0 1-2.032 4.907"></path>
                     </svg>
-                    <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="45px"
-                            height="45px"
-                            color="white"
-                            viewBox="0 0 24 24"
-                    >
-                        <g fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path
-                                    d="M3.864 16.455c-.858-3.432-1.287-5.147-.386-6.301S6.148 9 9.685 9h4.63c3.538 0 5.306 0 6.207 1.154s.472 2.87-.386 6.301c-.546 2.183-.818 3.274-1.632 3.91c-.814.635-1.939.635-4.189.635h-4.63c-2.25 0-3.375 0-4.189-.635c-.814-.636-1.087-1.727-1.632-3.91Z"></path>
-                            <path
-                                    d="m19.5 9.5l-.71-2.605c-.274-1.005-.411-1.507-.692-1.886A2.5 2.5 0 0 0 17 4.172C16.56 4 16.04 4 15 4M4.5 9.5l.71-2.605c.274-1.005.411-1.507.692-1.886A2.5 2.5 0 0 1 7 4.172C7.44 4 7.96 4 9 4"></path>
-                            <path
-                                    d="M9 4a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Z"></path>
-                            <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M4.5 18L12 9m7.5 9l-7-8.5m-8 .5L12 21l7.5-11"></path>
-                        </g>
-                    </svg>
+                    <a href="{% url 'basket:basket_summary' %}"
+                       style="text-decoration: none;display: flex;flex-direction: row;justify-content: center">
+                        <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="45px"
+                                height="45px"
+                                color="white"
+                                viewBox="0 0 24 24"
+                        >
+                            <g fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path
+                                        d="M3.864 16.455c-.858-3.432-1.287-5.147-.386-6.301S6.148 9 9.685 9h4.63c3.538 0 5.306 0 6.207 1.154s.472 2.87-.386 6.301c-.546 2.183-.818 3.274-1.632 3.91c-.814.635-1.939.635-4.189.635h-4.63c-2.25 0-3.375 0-4.189-.635c-.814-.636-1.087-1.727-1.632-3.91Z"></path>
+                                <path
+                                        d="m19.5 9.5l-.71-2.605c-.274-1.005-.411-1.507-.692-1.886A2.5 2.5 0 0 0 17 4.172C16.56 4 16.04 4 15 4M4.5 9.5l.71-2.605c.274-1.005.411-1.507.692-1.886A2.5 2.5 0 0 1 7 4.172C7.44 4 7.96 4 9 4"></path>
+                                <path d="M9 4a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1Z"></path>
+                                <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M4.5 18L12 9m7.5 9l-7-8.5m-8 .5L12 21l7.5-11"></path>
+                            </g>
+                        </svg>
+                        {% with total_qty=basket|length %}
+                            <div id="basket-qty" class="basket-qty"
+                                 style="width: 25px;height: 25px;border-radius: 20px;border: 1px solid white;color: red;display: flex;flex-direction: row;justify-content: center;align-items: center;font-size: 14px;margin-left: -15px;margin-bottom: -15px;background-color: white">
+                                {% if total_qty > 0 %}
+                                    {{ total_qty }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </div>
+                        {% endwith %}
+                    </a>
                 </div>
                 <div
                         class="dropdown_menu"
@@ -344,39 +370,39 @@
                 >
                     {% if user.is_authenticated %}
                         <a href="#" class="account_dropdown_button_links">
-                        <span>Account</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <g
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-dasharray="28"
-                                    stroke-dashoffset="28"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                            >
-                                <path
-                                        d="M4 21v-1c0 -3.31 2.69 -6 6 -6h4c3.31 0 6 2.69 6 6v1"
+                            <span>Account</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <g
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-dasharray="28"
+                                        stroke-dashoffset="28"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
                                 >
-                                    <animate
-                                            fill="freeze"
-                                            attributeName="stroke-dashoffset"
-                                            dur="0.4s"
-                                            values="28;0"></animate>
-                                </path>
-                                <path
-                                        d="M12 11c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4Z"
-                                >
-                                    <animate
-                                            fill="freeze"
-                                            attributeName="stroke-dashoffset"
-                                            begin="0.4s"
-                                            dur="0.4s"
-                                            values="28;0"></animate>
-                                </path>
-                            </g>
-                        </svg>
-                    </a>
+                                    <path
+                                            d="M4 21v-1c0 -3.31 2.69 -6 6 -6h4c3.31 0 6 2.69 6 6v1"
+                                    >
+                                        <animate
+                                                fill="freeze"
+                                                attributeName="stroke-dashoffset"
+                                                dur="0.4s"
+                                                values="28;0"></animate>
+                                    </path>
+                                    <path
+                                            d="M12 11c-2.21 0 -4 -1.79 -4 -4c0 -2.21 1.79 -4 4 -4c2.21 0 4 1.79 4 4c0 2.21 -1.79 4 -4 4Z"
+                                    >
+                                        <animate
+                                                fill="freeze"
+                                                attributeName="stroke-dashoffset"
+                                                begin="0.4s"
+                                                dur="0.4s"
+                                                values="28;0"></animate>
+                                    </path>
+                                </g>
+                            </svg>
+                        </a>
                         <a href="#" class="account_dropdown_button_links">
                             <span>Inquiries</span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26">
@@ -626,6 +652,7 @@
 <script src="{% static 'js/product_cards.js' %}"></script>
 <script src="{% static 'js/category_card.js' %}"></script>
 <script src="{% static 'js/filter_form_js.js' %}"></script>
+<script src="{% static 'js/product_page.js' %}"></script>
 {% block extra_scripts %}{% endblock %}
 </body>
 </html>
