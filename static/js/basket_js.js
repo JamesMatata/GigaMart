@@ -34,8 +34,8 @@ function updateSummarySection(basketItems) {
                 <td class="basket_summary_td" style="flex: 1;">
                     <p class="basket_summary_product_title">${item.product_name}</p>
                 </td>
-                <td class="basket_summary_td quantity" style="width: 45px;">${item.qty}</td>
-                <td class="basket_summary_td price" style="width: 100px;overflow: hidden;">KES ${item.price.toFixed(2)}</td>
+                <td class="basket_summary_td quantity" style="width: 60px;">${item.qty}</td>
+                <td class="basket_summary_td price" style="width: 110px;overflow: hidden;">${parseFloat(item.price).toFixed(2)}</td>
             `;
 
             summaryTable.appendChild(row);
@@ -45,6 +45,25 @@ function updateSummarySection(basketItems) {
     // Recalculate the total cost after updating the summary section
     calculateTotalCost();
 }
+
+function refreshBasketSummary() {
+    $.ajax({
+        type: 'GET',
+        url: '/basket/',  // The URL for the summary view, should be '/basket/' if it's the correct endpoint
+        dataType: 'json',
+        success: function (json) {
+            // Update the summary section with the basket items
+            updateSummarySection(json.basket_items);
+
+            // Update subtotal if needed
+            document.getElementById("basket-subtotal").textContent = "KES " + json.subtotal;
+        },
+        error: function (xhr) {
+            console.log('Error: ' + xhr.responseText);
+        }
+    });
+}
+
 
 // Delete Item
 $(document).on('click', '.delete-button', function (e) {
@@ -61,7 +80,7 @@ $(document).on('click', '.delete-button', function (e) {
         success: function (json) {
             $(`.product-item[data-index="${productId}"]`).remove();
             document.getElementById("basket-qty").innerHTML = json.qty;
-            updateSummarySection(json.basket_items);
+            refreshBasketSummary()
 
             if (json.qty === 0) {
                 document.querySelector('.container').innerHTML = `
@@ -78,6 +97,7 @@ $(document).on('click', '.delete-button', function (e) {
     });
 });
 
+// Update Item Quantity
 $(document).on('click', '.update-button', function (e) {
     e.preventDefault();
     const productId = $(this).data('index');
@@ -92,13 +112,15 @@ $(document).on('click', '.update-button', function (e) {
         contentType: 'application/json',  // Ensure data type matches expected JSON format
         success: function (json) {
             document.getElementById("basket-qty").innerHTML = json.qty;
-            updateSummarySection(json.basket_items);
+            refreshBasketSummary()
         },
         error: function (xhr) {
             console.log('Error: ' + xhr.responseText);
         }
     });
 });
+
+refreshBasketSummary()
 
 
 function getCSRFToken() {

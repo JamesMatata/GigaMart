@@ -6,12 +6,38 @@ from django.views import View
 from store.models import Product
 from .Basket import Basket
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class BasketSummaryView(View):
     def get(self, request):
         basket = Basket(request)
-        basket_items = basket.get_items()  # Assuming `get_items()` returns the items in the basket
-        basket_subtotal = basket.get_subtotal()  # Assuming `get_subtotal()` returns the subtotal
+        basket_items = basket.get_items()
+        basket_subtotal = basket.get_subtotal()
+
+        logger.debug(f"Basket items: {basket_items}")
+        logger.debug(f"Basket subtotal: {basket_subtotal}")
+
+        # Convert all Decimal values to strings for JSON serialization
+        basket_items_serialized = [
+            {
+                'product_name': item['product'].name,
+                'qty': item['qty'],
+                'price': str(item['price'])
+            } for item in basket_items
+        ]
+
+        basket_subtotal = str(basket_subtotal)
+
+        # Check if the request is an AJAX call
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({
+                'basket_items': basket_items_serialized,
+                'subtotal': basket_subtotal,
+            })
+
         return render(request, 'basket/summary.html', {
             'basket_items': basket_items,
             'basket_subtotal': basket_subtotal

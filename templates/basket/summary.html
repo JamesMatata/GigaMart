@@ -81,27 +81,17 @@
                     {% if basket_items %}
                         <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5" style="padding: 0 10px;">
                             <div class="basket_summary_div">
-                                <table style="width: 100%; background-color: #6490ff; border-collapse: collapse;box-sizing: border-box;">
+                                <table id="basket_summary_table" style="width: 100%; background-color: #6490ff; border-collapse: collapse;box-sizing: border-box;">
                                     <tr style="display: flex;">
                                         <th class="basket_summary_hd" style="flex: 1;">Product</th>
-                                        <th class="basket_summary_hd" style="width: 45px;">Qty</th>
-                                        <th class="basket_summary_hd" style="width: 100px;">@Price</th>
+                                        <th class="basket_summary_hd" style="width: 60px;">Qty</th>
+                                        <th class="basket_summary_hd" style="width: 110px;">@Price</th>
                                     </tr>
-                                    {% for item in basket_items %}
-                                        <tr style="display: flex;">
-                                            <td class="basket_summary_td" style="flex: 1; ">
-                                                <p class="basket_summary_product_title">
-                                                    {{ item.product.name }}
-                                            </td>
-                                            <td class="basket_summary_td" style="width: 45px;">{{ item.qty }}</td>
-                                            <td class="basket_summary_td"
-                                                style="width: 100px;overflow: hidden;">{{ item.product.price }}</td>
-                                        </tr>
-                                    {% endfor %}
+                                    
                                 </table>
 
                                 <div class="checkout_button_div">
-                                    <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;margin-bottom: 20px">
+                                    <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;margin-bottom: 10px">
                                         <p style="font-weight: 500;color: white;">Total Cost:</p>
                                         <p style="font-weight: 500;color: white;"><span id="total-costs"></span></p>
                                         <input type="hidden" id="total-costs-input" name="total_cost" value="">
