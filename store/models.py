@@ -84,6 +84,8 @@ class Product(models.Model):
                                    validators=[MinValueValidator(0), MaxValueValidator(100)])
     main_image = models.ImageField(upload_to='products')
 
+    users_wishlist = models.ManyToManyField(User, related_name="user_wishlist", blank=True)
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)

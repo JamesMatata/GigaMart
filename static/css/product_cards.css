@@ -193,9 +193,10 @@
     margin-top: auto;
 }
 
-.product_card_basket_and_later_div svg {
+.product_card_basket_and_later_div svg ,.add-to-cart-button svg{
     height: 35px;
     width: 35px;
+    color: #6490ff;
 }
 .product_price {
     text-align: center; font-weight: 500; margin: 8px 0
@@ -203,4 +204,8 @@
 .grid_product_card .product_price {
     font-size: 13px!important;
     margin: 0!important;
+}
+
+.add-to-cart-button, .add-to-wishlist-button {
+    background: transparent;border: none;padding: 0
 }

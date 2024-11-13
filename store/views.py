@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, get_object_or_404
@@ -20,6 +21,7 @@ def category_list(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
     subcategories = Subcategory.objects.filter(category=category)
     products = Product.objects.filter(category=category)
+
 
     # Apply filters only if parameters are provided
     price_min = request.GET.get('price_min')
@@ -133,3 +135,39 @@ def product_detail(request, slug):
         'product': product,
     }
     return render(request, 'store/product_page.html', context)
+
+
+@login_required
+def add_to_wishlist(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.user in product.users_wishlist.all():
+        # If the product is already in the wishlist, remove it
+        product.users_wishlist.remove(request.user)
+        return JsonResponse({'status': 'removed', 'message': 'Product removed from wishlist'})
+    else:
+        # Add the product to the user's wishlist
+        product.users_wishlist.add(request.user)
+        return JsonResponse({'status': 'added', 'message': 'Product added to wishlist'})
+
+
+def remove_from_wishlist(request, product_id):
+    if request.method == "POST":
+        product = get_object_or_404(Product, id=product_id)
+
+        if request.user.is_authenticated:
+            # Remove the product from the user's wishlist
+            product.users_wishlist.remove(request.user)
+
+            # Get the count of products in the user's wishlist
+            wishlist_count = product.users_wishlist.count()
+
+            # Return the response with the new wishlist count
+            return JsonResponse({
+                'status': 'removed',
+                'message': 'Product removed from wishlist',
+                'wishlist_count': wishlist_count  # Send the updated wishlist count
+            })
+        else:
+            return JsonResponse({'status': 'error', 'message': 'User not authenticated'})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'})

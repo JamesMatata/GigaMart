@@ -9,14 +9,15 @@
     <div class="container" style="margin-top: 100px">
         <div class="row">
             <div class="col-12 col-sm-10 col-md-10 col-lg-11 col-xl-10" style="margin: auto;">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7">
-                        <h3 style="font-size: 18px;font-weight: bold">Shopping List</h3>
-                        <hr>
-                        {% if basket_items %}
+                {% if basket_items %}
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7">
+                            <h3 style="font-size: 22px;font-weight: bold;">Shopping List</h3>
+                            <hr>
                             {% for item in basket_items %}
                                 {% with product=item.product %}
-                                    <div class="row cart_product_card product-item" style="margin-bottom: 10px" data-index="{{ product.id }}">
+                                    <div class="row cart_product_card product-item" style="margin-bottom: 10px"
+                                         data-index="{{ product.id }}">
                                         <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 cart_product_image_div">
                                             <img src="{{ product.main_image.url }}" alt=""
                                                  style="width: 100%;height: 100%;object-fit: contain;">
@@ -26,7 +27,8 @@
                                                 <div class="row" style="flex: 1;margin-bottom: 10px;">
                                                     <div class="col-6"
                                                          style="border-right: 2px solid #6490ff;padding-right: 5px;box-sizing: border-box;">
-                                                        <a href="#" style="text-decoration: none;">
+                                                        <a href="{{ product.get_absolute_url }}"
+                                                           style="text-decoration: none;">
                                                             <p class="cart_product_title">
                                                                 {{ product.name }}
                                                             </p>
@@ -51,19 +53,24 @@
                                             </div>
                                             <div class="cart_product_details_min_div1"
                                                  style="display: flex;flex-direction: row;justify-content: end;align-items: center;">
-                                                <label for="quantity{{ product.id }}" style="font-weight: bold;">Qty: <input
-                                                        id="quantity{{ product.id }}"
-                                                        class="quantity basket_product_qty" value="{{ item.qty }}"
-                                                        min="1" type="number"></label>
+                                                <label for="quantity{{ product.id }}" style="font-weight: bold;">Qty:
+                                                    <input
+                                                            id="quantity{{ product.id }}"
+                                                            class="quantity basket_product_qty" value="{{ item.qty }}"
+                                                            min="1" type="number"></label>
                                                 <button class="update-button" data-index="{{ product.id }}"
                                                         data-update-url="{% url 'basket:basket_update' %}"
                                                         style="border-radius:3px 0 0 3px;">Update
                                                 </button>
                                                 <button class="shopping_cart_buttons"
-                                                        style="border-radius: 0 0 10px 0;">
+                                                        style="border-radius: 0 0 10px 0;"
+                                                        {% if user.is_authenticated %}{% else %}disabled{% endif %}
+                                                        id="wishlist-btn-{{ product.id }}"
+                                                        data-add-to-wishlist-url="{% url 'store:add_to_wishlist' product.id %}"
+                                                        onclick="addToWishlist({{ product.id }})">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                          viewBox="0 0 24 24">
-                                                        <path fill="currentColor"
+                                                        <path fill="{% if user in product.users_wishlist.all %} #800080 {% else %} #808080 {% endif %}"
                                                               d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"></path>
                                                     </svg>
                                                     Save
@@ -73,21 +80,18 @@
                                     </div>
                                 {% endwith %}
                             {% endfor %}
-                        {% else %}
-                            <p id="no-items-in-basket">Your basket is empty. <a href="{% url 'store:index' %}">Shop</a>
-                            </p>
-                        {% endif %}
-                    </div>
-                    {% if basket_items %}
+
+                        </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5" style="padding: 0 10px;">
                             <div class="basket_summary_div">
-                                <table id="basket_summary_table" style="width: 100%; background-color: #6490ff; border-collapse: collapse;box-sizing: border-box;">
+                                <table id="basket_summary_table"
+                                       style="width: 100%; background-color: #6490ff; border-collapse: collapse;box-sizing: border-box;">
                                     <tr style="display: flex;">
                                         <th class="basket_summary_hd" style="flex: 1;">Product</th>
                                         <th class="basket_summary_hd" style="width: 60px;">Qty</th>
                                         <th class="basket_summary_hd" style="width: 110px;">@Price</th>
                                     </tr>
-                                    
+
                                 </table>
 
                                 <div class="checkout_button_div">
@@ -100,12 +104,18 @@
                                 </div>
                             </div>
                         </div>
-                    {% endif %}
-                </div>
+                    </div>
+                {% else %}
+                    <p id="no-items-in-basket" style="text-align: center;font-weight: 500">Your basket is empty. <a
+                            href="{% url 'store:index' %}">Shop</a>
+                    </p>
+                {% endif %}
             </div>
         </div>
     </div>
+{% endblock %}
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% block extra_scripts %}
     <script src="{% static 'js/basket_js.js' %}"></script>
+    <script src="{% static 'js/product_cards.js' %}"></script>
 {% endblock %}

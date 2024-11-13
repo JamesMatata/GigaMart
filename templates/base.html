@@ -195,7 +195,7 @@
                                 </g>
                             </svg>
                         </a>
-                        <a href="#" class="account_dropdown_button_links">
+                        <a href="{% url 'accounts:wishlist' %}" class="account_dropdown_button_links">
                             <span>Wishlist</span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path
@@ -420,7 +420,7 @@
                                 </g>
                             </svg>
                         </a>
-                        <a href="#" class="account_dropdown_button_links">
+                        <a href="{% url 'accounts:wishlist' %}" class="account_dropdown_button_links">
                             <span>Wishlist</span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path
@@ -479,8 +479,9 @@
     </div>
 </nav>
 
-
-{% block main %}{% endblock %}
+<div class="container-fluid" style="padding: 10px;box-sizing: border-box;">
+    {% block main %}{% endblock %}
+</div>
 
 
 <footer style="margin-top: 500px">
@@ -648,11 +649,8 @@
 </footer>
 
 <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/base.js' %}"></script>
-<script src="{% static 'js/product_cards.js' %}"></script>
-<script src="{% static 'js/category_card.js' %}"></script>
-<script src="{% static 'js/filter_form_js.js' %}"></script>
-<script src="{% static 'js/product_page.js' %}"></script>
 {% block extra_scripts %}{% endblock %}
 </body>
 </html>

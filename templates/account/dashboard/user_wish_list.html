@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load basket_extras %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" href="{% static 'css/wishlist_page.css' %}">
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="row" style="margin-top: 100px;">
+            <div class="col-12 col-sm-11 col-md-12 col-lg-11 col-xl-9" style="margin: auto;">
+                <h3 style="font-size: 22px;font-weight: bold;">Wishlist</h3>
+                <hr>
+                <div class="no_wishlist_items" style="display: {% if wishlist %}none{% else %}block{% endif %}">
+                    <h3 style="font-size: 20px;margin-top: 30px;font-weight: 500">Your wishlist is empty. <a
+                            href="{% url 'store:index' %}">Shop</a></h3>
+                </div>
+            </div>
+            {% if wishlist %}
+                {% for item in wishlist %}
+                    <div class="col-12 col-sm-11 col-md-12 col-lg-11 col-xl-9 wishlist_item_details_main_div"
+                         style="margin-bottom: 10px">
+                        <div class="wishlist_item_img">
+                            <img src="{{ item.main_image.url }}" alt="{{ item.name }}">
+                        </div>
+                        <div class="row" style="flex: 1;box-sizing: border-box;">
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-4 col-xl-4 wishlist_item_details_divs">
+                                <a style="text-decoration: none" href="{{ item.get_absolute_url }}"><p
+                                        class="wishlist_item_title">{{ item.name }}</p></a>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 wishlist_item_details_divs">
+                                <p style="margin: 0;padding: 5px;font-weight: 500;">KES {{ item.price }}</p>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 wishlist_item_details_divs">
+                                <p style="margin: 0;padding: 5px;font-weight: 500;">Available</p>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-4 wishlist_item_card_action_div">
+                                <button class="wishlist_add_to_cart_button" id="wishlist_add_to_basket{{ item.id }}"
+                                        onclick="addToCart('{{ item.id }}')"
+                                        data-product-id="{{ item.id }}"
+                                        data-add-url="{% url 'basket:basket_add' %}"
+                                        {% if item|in_basket:basket %}disabled{% endif %}>
+                                    {% if item|in_basket:basket %}In-Cart{% else %}Add-to-Cart{% endif %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" width="20px"
+                                         height="20px"
+                                         style="margin-left: 5px;">
+                                        <path
+                                                fill="currentColor"
+                                                d="m2.449 14.398l.447-.224zm10.102 0l.447.224zM.703 6h13.594V5H.703zM14 5.703v.439h1v-.439zM12.386 14H2.614v1h9.772zM1 6.142v-.439H0v.439zm1.896 8.032A17.96 17.96 0 0 1 1 6.142H0c0 2.944.685 5.847 2.002 8.48zM2.614 14c.12 0 .229.068.282.174l-.894.448a.69.69 0 0 0 .612.378zm9.49.174a.32.32 0 0 1 .282-.174v1c.26 0 .496-.146.612-.378zM14 6.142c0 2.788-.65 5.538-1.896 8.032l.894.448A18.96 18.96 0 0 0 15 6.142zM14.297 6A.297.297 0 0 1 14 5.703h1A.703.703 0 0 0 14.297 5zM.703 5A.703.703 0 0 0 0 5.703h1A.297.297 0 0 1 .703 6zm3.226.757l3-5L6.07.243l-3 5zm4.142-5l3 5l.858-.514l-3-5zM7 7v5h1V7zm-2 3h5V9H5z"
+                                        />
+                                    </svg>
+                                </button>
+                                <button class="wishlist_delete_button" onclick="removeFromWishlist({{ item.id }})"
+                                        data-product-id="{{ item.id }}"
+                                        data-remove-url="{% url 'store:remove_from_wishlist' item.id %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 16 16"
+                                         color="red">
+                                        <path fill="currentColor" fill-rule="evenodd"
+                                              d="M5.75 3V1.5h4.5V3zm-1.5 0V1a1 1 0 0 1 1-1h5.5a1 1 0 0 1 1 1v2h2.5a.75.75 0 0 1 0 1.5h-.365l-.743 9.653A2 2 0 0 1 11.148 16H4.852a2 2 0 0 1-1.994-1.847L2.115 4.5H1.75a.75.75 0 0 1 0-1.5zm-.63 1.5h8.76l-.734 9.538a.5.5 0 0 1-.498.462H4.852a.5.5 0 0 1-.498-.462z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function addToCart(productId) {
+            // Select the button using the productId
+            const button = document.getElementById(`wishlist_add_to_basket${productId}`);
+
+            // Ensure the button exists
+            if (!button) {
+                console.error('Add-to-cart button not found for productId:', productId);
+                return;  // Exit early if the button is not found
+            }
+
+            const addUrl = button.getAttribute('data-add-url');  // Get the URL from the button's data attribute
+
+            // Make the request to add the product to the basket
+            fetch(addUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',  // Ensure this is rendered properly in the template
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    productid: productId,
+                    productqty: 1  // Set quantity to 1 by default
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // If the product was added successfully, update the button
+                    if (data.success) {
+                        // Update the basket quantity display
+                        const basketQtyElement = document.getElementById('basket-qty');
+                        if (basketQtyElement) {
+                            basketQtyElement.innerText = data.basket_qty;
+                        }
+
+                        // Change button text and disable it, while keeping the SVG intact
+                        const svg = button.querySelector('svg');  // Select the SVG inside the button
+
+                        // Update button text to 'In-Cart'
+                        button.innerHTML = 'In-Cart';  // Clear existing content and set new text
+
+                        svg.style.marginLeft = '10px'
+                        // Append the SVG back to the button after the text
+                        button.appendChild(svg);
+
+                        // Disable the button
+                        button.disabled = true;
+                    } else {
+                        // Log the error if adding to the cart failed
+                        console.error('Failed to add to cart:', data.error || 'Unknown error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);  // Log the error, no alert shown to the user
+                });
+        }
+
+        function removeFromWishlist(productId) {
+            const button = document.querySelector(`.wishlist_delete_button[data-product-id="${productId}"]`);
+            const url = button.getAttribute('data-remove-url');
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}', // Make sure CSRF token is included
+                },
+                body: JSON.stringify({product_id: productId})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'removed') {
+                        // Remove the product's container element from the DOM
+                        const itemDiv = button.closest('.wishlist_item_details_main_div');
+                        if (itemDiv) itemDiv.remove();
+
+                        // If the wishlist count is zero, show the "Wishlist Empty" message
+                        if (data.wishlist_count === 0) {
+                            const noWishlistDiv = document.querySelector('.no_wishlist_items');
+                            if (noWishlistDiv) {
+                                noWishlistDiv.style.display = 'block';
+                            }
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
+{% endblock %}

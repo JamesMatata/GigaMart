@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ category.name }} | GigaMart{% endblock %}
 
@@ -192,140 +193,15 @@
 
             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
                 <div class="row" id="product-list-div">
-                    {% for item in products %}
-                        <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3" style="padding: 0 5px">
-                            <div class="grid_product_card" style="width: 100%!important;">
-                                <div class="image_div" style="height: 50%; width: 100%; box-sizing: border-box">
-                                    <img src="{{ item.main_image.url }}" alt="{{ item.name }}_image"/>
-                                </div>
-                                <div class="details_div">
-                                    <p class="product_title">
-                                        <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
-                                    </p>
-                                    <p class="product_price">
-                                        KES <span>{{ item.price }}</span>
-                                        {% if item.discount > 0 %}
-                                            | <span>{{ item.discount }}%</span>
-                                        {% endif %}
-                                    </p>
-                                    <p style="text-align: center; margin: 4px 0">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                             viewBox="0 0 15 15">
-                                            <path fill="currentColor"
-                                                  d="M9.875 7.5a2.375 2.375 0 1 1-4.75 0a2.375 2.375 0 0 1 4.75 0"/>
-                                        </svg>
-                                        {% if item.items_remaining > 20 %}
-                                            <span style="color: green">Available</span>
-                                        {% elif item.items_remaining > 0 %}
-                                            <span style="color: orange">{{ item.items_remaining }} remaining</span>
-                                        {% else %}
-                                            <span style="color: red">Out of stock</span>
-                                        {% endif %}
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                             viewBox="0 0 15 15">
-                                            <path fill="currentColor"
-                                                  d="M9.875 7.5a2.375 2.375 0 1 1-4.75 0a2.375 2.375 0 0 1 4.75 0"/>
-                                        </svg>
-                                    </p>
-                                    <div class="product_card_basket_and_later_div">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                  d="M12.001 4.529a6 6 0 0 1 8.242.228a6 6 0 0 1 .236 8.236l-8.48 8.492l-8.478-8.492a6 6 0 0 1 8.48-8.464"/>
-                                        </svg>
-                                        <div class="no_items_to_add_div">
-                                            <button class="product_cart_decrease_items_button">+</button>
-                                            <input class="product_cart_items_to_add_no" type="number" value="1"/>
-                                            <button class="product_cart_increase_items_button">-</button>
-                                        </div>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
-                                            <path fill="currentColor"
-                                                  d="m2.449 14.398l.447-.224zm10.102 0l.447.224zM.703 6h13.594V5H.703zM14 5.703v.439h1v-.439zM12.386 14H2.614v1h9.772zM1 6.142v-.439H0v.439zm1.896 8.032A17.96 17.96 0 0 1 1 6.142H0c0 2.944.685 5.847 2.002 8.48zM2.614 14c.12 0 .229.068.282.174l-.894.448a.69.69 0 0 0 .612.378zm9.49.174a.32.32 0 0 1 .282-.174v1c.26 0 .496-.146.612-.378zM14 6.142c0 2.788-.65 5.538-1.896 8.032l.894.448A18.96 18.96 0 0 0 15 6.142zM14.297 6A.297.297 0 0 1 14 5.703h1A.703.703 0 0 0 14.297 5zM.703 5A.703.703 0 0 0 0 5.703h1A.297.297 0 0 1 .703 6zm3.226.757l3-5L6.07.243l-3 5zm4.142-5l3 5l.858-.514l-3-5zM7 7v5h1V7zm-2 3h5V9H5z"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                    {% if products.paginator.num_pages > 1 %}
-                        <div class="pagination">
-                            <!-- First and Previous buttons, disabled if there's no previous page -->
-                            {% if products.has_previous %}
-                                <button value="1" class="pagination-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill="currentColor"
-                                              d="m9 2l1.3 1.3L3.7 10l6.6 6.7L9 18l-8-8zm8.5 0L19 3.3L12.2 10l6.7 6.7l-1.4 1.3l-8-8z"/>
-                                    </svg>
-                                </button>
-                                <button value="{{ products.previous_page_number }}" class="pagination-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill="currentColor" d="m4 10l9 9l1.4-1.5L7 10l7.4-7.5L13 1z"/>
-                                    </svg>
-                                </button>
-                            {% else %}
-                                <button disabled class="pagination-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill="currentColor"
-                                              d="m9 2l1.3 1.3L3.7 10l6.6 6.7L9 18l-8-8zm8.5 0L19 3.3L12.2 10l6.7 6.7l-1.4 1.3l-8-8z"/>
-                                    </svg>
-                                </button>
-                                <button disabled class="pagination-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill="currentColor" d="m4 10l9 9l1.4-1.5L7 10l7.4-7.5L13 1z"/>
-                                    </svg>
-                                </button>
-                            {% endif %}
-
-                            <!-- Center pagination buttons: previous page, current page, and next page -->
-                            <div class="pagination-center">
-                                {% if products.number > 1 %}
-                                    <button value="{{ products.number|add:"-1" }}"
-                                            class="pagination-link">{{ products.number|add:"-1" }}</button>
-                                {% else %}
-                                    <button disabled class="pagination-link">-</button>
-                                {% endif %}
-
-                                <!-- Current page, highlighted as active -->
-                                <button value="{{ products.number }}"
-                                        class="pagination-link active">{{ products.number }}</button>
-
-                                {% if products.number < products.paginator.num_pages %}
-                                    <button value="{{ products.number|add:"1" }}"
-                                            class="pagination-link">{{ products.number|add:"1" }}</button>
-                                {% else %}
-                                    <button disabled class="pagination-link">-</button>
-                                {% endif %}
-                            </div>
-
-                            <!-- Next and Last buttons, disabled if there's no next page -->
-                            {% if products.has_next %}
-                                <button value="{{ products.next_page_number }}" class="pagination-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill="currentColor" d="M7 1L5.6 2.5L13 10l-7.4 7.5L7 19l9-9z"/>
-                                    </svg>
-                                </button>
-                                <button value="{{ products.paginator.num_pages }}" class="pagination-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill="currentColor"
-                                              d="M11 2L9.7 3.3l6.6 6.7l-6.6 6.7L11 18l8-8zM2.5 2L1 3.3L7.8 10l-6.7 6.7L2.5 18l8-8z"/>
-                                    </svg>
-                                </button>
-                            {% else %}
-                                <button disabled class="pagination-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill="currentColor" d="M7 1L5.6 2.5L13 10l-7.4 7.5L7 19l9-9z"/>
-                                    </svg>
-                                </button>
-                                <button disabled class="pagination-link">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill="currentColor"
-                                              d="M11 2L9.7 3.3l6.6 6.7l-6.6 6.7L11 18l8-8zM2.5 2L1 3.3L7.8 10l-6.7 6.7L2.5 18l8-8z"/>
-                                    </svg>
-                                </button>
-                            {% endif %}
-                        </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'js/category_card.js' %}"></script>
+    <script src="{% static 'js/filter_form_js.js' %}"></script>
+    <script src="{% static 'js/product_cards.js' %}"></script>
+
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% load custom_filters %}
 
@@ -38,20 +39,28 @@
                     </p>
                     <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;margin-top: auto;">
                         <div class="product_page_add_to_cart_div">
-    <input type="number" id="quantity-input" style="max-width: 80px;" min="1" value="1">
-    <button id="add-to-cart-button" data-product-id="{{ product.id }}">Add to Cart
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" width="20px" height="20px" style="margin-left: 5px;">
-            <path
-                fill="currentColor"
-                d="m2.449 14.398l.447-.224zm10.102 0l.447.224zM.703 6h13.594V5H.703zM14 5.703v.439h1v-.439zM12.386 14H2.614v1h9.772zM1 6.142v-.439H0v.439zm1.896 8.032A17.96 17.96 0 0 1 1 6.142H0c0 2.944.685 5.847 2.002 8.48zM2.614 14c.12 0 .229.068.282.174l-.894.448a.69.69 0 0 0 .612.378zm9.49.174a.32.32 0 0 1 .282-.174v1c.26 0 .496-.146.612-.378zM14 6.142c0 2.788-.65 5.538-1.896 8.032l.894.448A18.96 18.96 0 0 0 15 6.142zM14.297 6A.297.297 0 0 1 14 5.703h1A.703.703 0 0 0 14.297 5zM.703 5A.703.703 0 0 0 0 5.703h1A.297.297 0 0 1 .703 6zm3.226.757l3-5L6.07.243l-3 5zm4.142-5l3 5l.858-.514l-3-5zM7 7v5h1V7zm-2 3h5V9H5z"
-            />
-        </svg>
-    </button>
-</div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                  d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"/>
-                        </svg>
+                            <input type="number" id="quantity-input" style="max-width: 80px;" min="1" value="1">
+                            <button id="add-to-cart-button" data-product-id="{{ product.id }}">Add to Cart
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" width="20px" height="20px"
+                                     style="margin-left: 5px;">
+                                    <path
+                                            fill="currentColor"
+                                            d="m2.449 14.398l.447-.224zm10.102 0l.447.224zM.703 6h13.594V5H.703zM14 5.703v.439h1v-.439zM12.386 14H2.614v1h9.772zM1 6.142v-.439H0v.439zm1.896 8.032A17.96 17.96 0 0 1 1 6.142H0c0 2.944.685 5.847 2.002 8.48zM2.614 14c.12 0 .229.068.282.174l-.894.448a.69.69 0 0 0 .612.378zm9.49.174a.32.32 0 0 1 .282-.174v1c.26 0 .496-.146.612-.378zM14 6.142c0 2.788-.65 5.538-1.896 8.032l.894.448A18.96 18.96 0 0 0 15 6.142zM14.297 6A.297.297 0 0 1 14 5.703h1A.703.703 0 0 0 14.297 5zM.703 5A.703.703 0 0 0 0 5.703h1A.297.297 0 0 1 .703 6zm3.226.757l3-5L6.07.243l-3 5zm4.142-5l3 5l.858-.514l-3-5zM7 7v5h1V7zm-2 3h5V9H5z"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
+                        <button style="border: none;background: transparent" class="add-to-wishlist-button"
+                                {% if user.is_authenticated %}{% else %}disabled{% endif %}
+                                id="wishlist-btn-{{ product.id }}"
+                                data-add-to-wishlist-url="{% url 'store:add_to_wishlist' product.id %}"
+                                onclick="addToWishlist({{ product.id }})">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24">
+                                <path fill="{% if user in product.users_wishlist.all %} #800080 {% else %} #808080 {% endif %}"
+                                      d="m12 21.35l-1.45-1.32C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53z"/>
+                            </svg>
+                        </button>
+
                     </div>
 
                 </div>
@@ -92,36 +101,39 @@
             </div>
         </div>
     </div>
-    
-    <script>
-    document.getElementById('add-to-cart-button').addEventListener('click', function() {
-        const productId = this.getAttribute('data-product-id');
-        const quantity = document.getElementById('quantity-input').value;
-        console.log(productId,quantity)
 
-        fetch("{% url 'basket:basket_add' %}", {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                productid: productId,
-                productqty: quantity
+    <script>
+        document.getElementById('add-to-cart-button').addEventListener('click', function () {
+            const productId = this.getAttribute('data-product-id');
+            const quantity = document.getElementById('quantity-input').value;
+
+            fetch("{% url 'basket:basket_add' %}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    productid: productId,
+                    productqty: quantity
+                })
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById('basket-qty').innerText = data.basket_qty;
-            } else {
-                alert('Failed to add product');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred');
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('basket-qty').innerText = data.basket_qty;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred');
+                });
         });
-    });
-</script>
+    </script>
+{% endblock %}
+
+
+{% block extra_scripts %}
+    <script src="{% static 'js/product_page.js' %}"></script>
+    <script src="{% static 'js/product_cards.js' %}"></script>
 {% endblock %}

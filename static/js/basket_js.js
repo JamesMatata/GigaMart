@@ -84,7 +84,7 @@ $(document).on('click', '.delete-button', function (e) {
 
             if (json.qty === 0) {
                 document.querySelector('.container').innerHTML = `
-                    <p id="no-items-in-basket" style="margin-bottom: 400px; margin-top: 20px; text-align: center; font-size: 18px;">
+                    <p id="no-items-in-basket" style="margin-bottom: 400px; margin-top: 20px; text-align: center; font-size: 18px;font-weight: 500">
                         Your basket is empty <a href="{% url 'store:index' %}">Shop</a>
                     </p>`;
             }
