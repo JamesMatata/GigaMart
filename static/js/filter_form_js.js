@@ -1,3 +1,7 @@
+function getCurrentQuery() {
+    return document.getElementById('search_query').value || '';
+}
+
 // Function to toggle the filter form visibility for small screens
 document.getElementById('filter-toggle-btn')?.addEventListener('click', function () {
     const filterForm = document.getElementById('small-screen-filter-form');
@@ -65,9 +69,13 @@ function getCurrentFilterParams(form) {
 
 // Apply filters and handle pagination with AJAX
 function applyFilters(form) {
-    const params = getCurrentFilterParams(form).toString();
+    const params = getCurrentFilterParams(form);
+    const searchNavInput = document.getElementById('search_query')
+    if(searchNavInput) {
+        params.append('searchbar_input', getCurrentQuery());
+    }
 
-    fetch(`${window.location.pathname}?${params}`, {
+    fetch(`${window.location.pathname}?${params.toString()}`, {
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
     })
     .then(response => response.text())

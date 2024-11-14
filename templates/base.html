@@ -63,8 +63,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="searchbar_div">
-                <svg
+            <div>
+                <form action="{% url 'store:search_results' %}" method="get" class="searchbar_div">
+                    <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="25"
                         height="25"
@@ -79,8 +80,10 @@
                     </g>
                 </svg>
                 <label for="searchbar_input2"></label>
-                <input class="searchbar_input" id="searchbar_input2" type="text"/>
-                <button class="searchbar_button">Search</button>
+                <input class="searchbar_input" name="searchbar_input" id="searchbar_input2" type="text"/>
+                <button type="submit" class="searchbar_button">Search</button>
+                </form>
+                
             </div>
         </div>
         <div class="main_nav_right_items">

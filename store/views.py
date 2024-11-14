@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 from django.http import JsonResponse, Http404
 from django.shortcuts import render, get_object_or_404
 
@@ -72,6 +73,76 @@ def category_list(request, category_slug):
         'products': paginated_products,
         'page_obj': paginated_products
     })
+
+
+def search_results(request):
+    query = request.GET.get('searchbar_input', '').strip()
+
+    # Start with an empty queryset
+    products = Product.objects.none()
+
+    if query:
+        # Filter products by search query in name and description
+        products = Product.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
+
+        print(products)
+        # Apply additional filters
+        price_min = request.GET.get('price_min')
+        price_max = request.GET.get('price_max')
+        subcategory_slugs = request.GET.getlist('subcategory')
+        discount = request.GET.get('discount')
+        availability = request.GET.get('availability')
+        warranty_months = request.GET.getlist('warranty')
+        arrival = request.GET.get('arrival')
+
+        if price_min and price_max:
+            products = products.filter(price__gte=price_min, price__lte=price_max)
+
+        if subcategory_slugs:
+            products = products.filter(subcategory__slug__in=subcategory_slugs)
+
+        if discount:
+            products = products.filter(discount__gte=discount)
+
+        if availability == 'in_stock':
+            products = products.filter(items_remaining__gt=0)
+
+        if warranty_months:
+            products = products.filter(warrant_months__in=warranty_months)
+
+        if arrival == 'newest':
+            products = products.order_by('-id')
+
+        # Pagination
+        paginator = Paginator(products, 10)  # Adjust items per page as needed
+        page_number = request.GET.get('page')
+
+        try:
+            paginated_products = paginator.page(page_number)
+        except PageNotAnInteger:
+            paginated_products = paginator.page(1)
+        except EmptyPage:
+            paginated_products = paginator.page(paginator.num_pages)
+        print(paginated_products)
+        # Check if AJAX request for dynamic loading
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            print('start')
+            print(products)
+            print('finish')
+            return render(request, 'store/_product_list.html', {'products': paginated_products})
+        print(products)
+        return render(request, 'store/search.html', {
+            'query': query,
+            'products': paginated_products,
+            'page_obj': paginated_products
+        })
+    else:
+        return render(request, 'store/search.html', {
+            'query': query,
+            'products': [],
+            'page_obj': []
+        })
+
 
 
 def subcategory_list(request, category_slug, subcategory_slug):

@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search | GigaMart{% endblock %}
+
+{% block main %}
+    <style>
+        .active {
+            background-color: red;
+        }
+    </style>
+
+    <div class="container" style="margin-top: 100px">
+        <div style="width: 100%;padding: 15px;background-color: #6490ff;box-sizing: border-box;border-radius: 10px 10px 0 0;">
+            <h3 style="font-size: 20px;color: white;font-weight: 500;margin: 0;">Results for '{{ query }}':</h3>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 50px">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3" id="large-screen-filter-form-div">
+                <form id="large-screen-filter-form">
+                    <!-- Price Range -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Price Range:</h3>
+
+
+                        <input type="range" id="large_price_range" name="price_range" min="0" max="500000" step="50"
+                               value="500000">
+                        <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+                            <input style="display: inline-block;" type="number" id="large_price_min" name="price_min"
+                                   placeholder="Min Price" max="500000">
+                            <input type="number" id="large_price_max" name="price_max" placeholder="Max Price"
+                                   max="500000">
+                        </div>
+                    </div>
+
+                    <!-- Subcategories -->
+                    {% if subcategories %}
+                        <div class="filter-group">
+                            <h3 class="filter_section_title">Subcategories:</h3>
+                            <div id="subcategory-options" class="filter-options subcategories_div">
+                                {% for subcategory in subcategories %}
+                                    <label><input type="checkbox" name="subcategory"
+                                                  value="{{ subcategory.slug }}"> {{ subcategory.name }}</label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Discount Offer -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Discount Offer:</h3>
+                        <label><input type="checkbox" name="discount" value="1"> Discounted Items</label>
+                    </div>
+
+                    <!-- Availability -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Availability:</h3>
+                        <label><input type="checkbox" name="availability" value="in_stock"> In Stock</label>
+                    </div>
+
+                    <!-- Warranty Period -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Warranty Period:</h3>
+                        <div class="filter-options">
+                            <label><input type="checkbox" name="warranty" value="1"> 1 Year</label>
+                            <label><input type="checkbox" name="warranty" value="2"> 2 Years</label>
+                            <label><input type="checkbox" name="warranty" value="3"> 3 Years</label>
+                        </div>
+                    </div>
+
+                    <!-- Arrival -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Arrival:</h3>
+                        <div class="filter-options">
+                            <label><input type="checkbox" name="arrival" value="recent"> New Arrival</label>
+                            <label><input type="checkbox" name="arrival" value="old"> Older Products</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3" id="small-screen-filter-form-div"
+                 style="display: none">
+                <!-- Dropdown button with icon -->
+                <button id="filter-toggle-btn" class="filter-toggle-btn"
+                        style="background-color: #6490ff; border-radius: 3px; padding: 5px 10px; border: 1px solid white; color: white; width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                    <span>Filter Options</span>
+                    <i id="toggle-icon" class="fas fa-chevron-down"></i>
+                </button>
+
+                <form id="small-screen-filter-form" style="display: none; margin-top: 10px;">
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Price Range:</h3>
+
+                        <input type="range" id="small_price_range" name="price_range" min="0" max="500000" step="50"
+                               value="500000">
+                        <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+                            <input style="display: inline-block;" type="number" id="small_price_min" name="price_min"
+                                   placeholder="Min Price" max="500000">
+                            <input type="number" id="small_price_max" name="price_max" placeholder="Max Price"
+                                   max="500000">
+                        </div>
+                    </div>
+
+                    <!-- Subcategories -->
+                    {% if subcategories %}
+                        <div class="filter-group">
+                            <h3 class="filter_section_title">Subcategories:</h3>
+                            <div id="subcategory-options" class="filter-options subcategories_div">
+                                {% for subcategory in subcategories %}
+                                    <label><input type="checkbox" name="subcategory"
+                                                  value="{{ subcategory.slug }}"> {{ subcategory.name }}</label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Discount Offer -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Discount Offer:</h3>
+                        <label><input type="checkbox" name="discount" value="1"> Discounted Items</label>
+                    </div>
+
+                    <!-- Availability -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Availability:</h3>
+                        <label><input type="checkbox" name="availability" value="in_stock"> In Stock</label>
+                    </div>
+
+                    <!-- Warranty Period -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Warranty Period:</h3>
+                        <div class="filter-options">
+                            <label><input type="checkbox" name="warranty" value="1"> 1 Year</label>
+                            <label><input type="checkbox" name="warranty" value="2"> 2 Years</label>
+                            <label><input type="checkbox" name="warranty" value="3"> 3 Years</label>
+                        </div>
+                    </div>
+
+                    <!-- Arrival -->
+                    <div class="filter-group">
+                        <h3 class="filter_section_title">Arrival:</h3>
+                        <div class="filter-options">
+                            <label><input type="checkbox" name="arrival" value="recent"> New Arrival</label>
+                            <label><input type="checkbox" name="arrival" value="old"> Older Products</label>
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <button type="submit" id="apply-filters-btn" class="apply-filter-btn"
+                                style="background-color: #6490ff; border-radius: 3px; padding: 5px 10px; border: 1px solid white; color: white; width: 100%;">
+                            Apply Filters
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
+                <input id="search_query" type="text" value="{{ query }}" hidden="hidden">
+                <div class="row" id="product-list-div">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'js/filter_form_js.js' %}"></script>
+    <script src="{% static 'js/product_cards.js' %}"></script>
+{% endblock %}
