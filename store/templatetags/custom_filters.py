@@ -14,3 +14,11 @@ def render_specification(value):
         return html
     else:
         return value
+
+
+@register.filter
+def total_price(items):
+    total = 0
+    for item in items:
+        total += float(item.get('qty', 0)) * float(item.get('price', 0))
+    return total

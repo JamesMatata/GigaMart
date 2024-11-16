@@ -1,0 +1,28 @@
+{% load custom_filters %}
+
+<div class="col-12 col-md-6" style="padding: 0;margin: auto">
+    <div class="inquiry_order_card">
+        <div class="inquiry_order_card_top_div"
+             style="display: flex;flex-direction: row;justify-content: space-between;">
+            <p style="margin: 0;">Order ID: <b>{{ order.unique_id }}</b></p>
+            <p style="margin: 0;">{{ inquiry.created_at|date:"d M, Y" }}</p>
+        </div>
+        <hr>
+        <p class="inquiry_order_card_items">
+            <b>Items: |</b>
+            {% for item in order.inquiry.items %}
+                {{ item.qty }} x {{ item.product_name }} @ KES {{ item.price }}
+            {% endfor %}
+            <b>|| Total: KES {{ order.inquiry.items|total_price }}</b>
+        </p>
+        <hr>
+        <div class="inquiry_order_card_bottom_div"
+             style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+            <p class="inquiry_order_card_status"
+               style="font-weight: bold;border-radius: 3px;margin: auto auto 0;">
+                Status: <span
+                    style="color: {% if order.order_status == 'Pending' %}orange{% else %}green{% endif %};">{{ order.order_status }}</span>
+            </p>
+        </div>
+    </div>
+</div>

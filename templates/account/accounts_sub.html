@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+{% endblock %}
+
+{% block main %}
+    <div class="container" style="margin-top: 100px">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-primary" alert="{{ message.tags }}" role="alert">
+                    <p style="text-align: center;">{{ message }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="row">
+            {% block account_content %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.forms import BaseInlineFormSet
 
-from .models import Category, Subcategory, Product, OrderItem, Order, Inquiry, ProductImage
+from .models import Category, Subcategory, Product, Order, Inquiry, ProductImage
 
 
 @admin.register(Category)
@@ -92,31 +92,37 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
 
 
-class OrderItemInline(admin.TabularInline):
-    model = OrderItem
-    extra = 0  # Disable extra empty fields
-    readonly_fields = ('product', 'quantity', 'price')
-
-
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'order_status', 'created_at')
+    list_display = ('unique_id', 'get_user', 'order_status', 'created_at')
     list_filter = ('order_status', 'created_at')
-    search_fields = ('user__username', 'id')
+    search_fields = ('get_user', 'unique_id')
     ordering = ('-created_at',)
-    inlines = [OrderItemInline]
+
+    def get_user(self, obj):
+        # Return a safe value for the user, if the user is None, return 'Guest'
+        if obj.user:
+            return obj.user.username
+        return 'Guest'  # Fallback if user is None
+
+    get_user.short_description = 'User'
 
 
 @admin.register(Inquiry)
 class InquiryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'inquiry_status', 'created_at')
+    # Display ID, user (safely), inquiry status, and creation date
+    list_display = ('unique_id', 'get_user', 'inquiry_status', 'created_at')
+
+    # Filters and search fields
     list_filter = ('inquiry_status', 'created_at')
-    search_fields = ('user__username', 'id')
+    search_fields = ('get_user', 'unique_id')  # Modify to search on the safe user field
+
     ordering = ('-created_at',)
 
+    def get_user(self, obj):
+        # Return a safe value for the user, if the user is None, return 'Guest'
+        if obj.user:
+            return obj.user.username
+        return 'Guest'  # Fallback if user is None
 
-@admin.register(OrderItem)
-class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('order', 'product', 'quantity', 'price')
-    search_fields = ('order__id', 'product__name')
-    ordering = ('order',)
+    get_user.short_description = 'User'

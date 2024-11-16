@@ -1,0 +1,69 @@
+/* Add universal box-sizing rule */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* General styling for the container and card */
+.container {
+    margin-top: 100px;
+}
+
+.inquiry_order_card {
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 100%; /* Prevent the card from exceeding its parent width */
+    overflow: hidden; /* Hide content that overflows */
+    word-wrap: break-word; /* Break long text to prevent overflow */
+    margin: 5px;
+}
+
+/* Ensure input and button within the form don't cause overflow */
+.inquiry_order_page_search_form input,
+.inquiry_order_page_search_form button {
+    max-width: 100%;
+}
+
+.inquiry_order_page_search_form input:focus {
+    outline: none;
+}
+
+/* Specific styling for the items paragraph */
+.inquiry_order_card_items {
+    word-wrap: break-word;
+    overflow-wrap: break-word; /* Additional wrapping to ensure text doesn't overflow */
+}
+
+/* Buttons and links */
+.inquiry_order_card_inquire_again_link {
+    padding: 8px 15px;
+    border: 1px solid #6490ff;
+    color: white;
+    font-weight: bold;
+    border-radius: 3px;
+    background: #6490ff;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.unauthenticated_users_info, .authenticated_users_info {
+    padding: 10px;
+    border: 1px solid gray;
+    color: black;
+    border-radius: 10px;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+.unauthenticated_users_info p, .authenticated_users_info p {
+    text-align: center;
+}
+
+.authenticated_users_info {
+    margin-top: 50px;
+    border: 1px solid #6490ff;
+}
+
+.users_info_divs {
+    margin: auto;padding: 0;box-sizing: border-box;
+}

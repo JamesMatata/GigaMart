@@ -3,4 +3,8 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
-    is_guest = models.BooleanField(default=False)
+    phone_number = models.CharField(max_length=15, unique=True)
+    county = models.CharField(max_length=50, unique=False)
+
+    def __str__(self):
+        return self.email

@@ -1,0 +1,102 @@
+{% load custom_filters %}
+{% load static %}
+{% autoescape off %}
+
+    <!DOCTYPE html>
+    <html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Email Confirmation</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-color: #e9ecef;
+                font-family: Arial, sans-serif;
+            }
+
+            .email-container {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+
+            .header, .footer {
+                text-align: center;
+                padding: 20px;
+            }
+
+            .header {
+                margin-bottom: 50px;
+                background: #1a82e2;
+            }
+
+            .footer {
+                margin-top: 30px;
+                background-color: #e9ecef;
+            }
+
+            .content {
+                padding: 20px;
+                font-size: 16px;
+                line-height: 1.5;
+                background: white;
+            }
+
+            .btn {
+                display: inline-block;
+                padding: 10px 20px;
+                color: #fff;
+                background-color: #1a82e2;
+                text-decoration: none;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+
+            a {
+                color: #1a82e2;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="email-container">
+        <!-- Header Section -->
+        <div class="header">
+            <img src="https://drive.google.com/uc?export=view&id=1iW8Kksf4X_WQgSLLubLpp0u3UbPh6TWF" alt="GigaMart"
+                 width="150" style="object-fit: contain;">
+        </div>
+
+        <!-- Main Content Section -->
+        <div class="content">
+            <p>Hello <b>{{ user.first_name }}</b>,</p>
+            <p>
+                Your Order has been created successful with the ID: {{ unique_id }}. <br>
+                <b>Items: |</b>
+                {% for item in items %}
+                    {{ item.qty }} x {{ item.product_name }} @ KES {{ item.price }}
+                {% endfor %}
+                <b>|| Total: KES {{ items|total_price }}</b>
+            </p>
+            <p>To view your order or track it click the link below:</p>
+            <p style="text-align: left;color: white;font-weight: 500;">
+                <a href="http://{{ domain }}{% url 'store:order_list' %}"
+                   style="color: white;text-decoration: none;" class="btn">View Order</a>
+            </p>
+
+            <p>Thank you for choosing GigaMart.</p>
+            <p>Best regards, The GigaMart Team</p>
+        </div>
+
+
+        <!-- Footer Section -->
+        <div class="footer">
+            <p style="font-size: 14px">If you didn't create the order, kindly ignore this email.</p>
+        </div>
+    </div>
+
+    </body>
+    </html>
+
+{% endautoescape %}

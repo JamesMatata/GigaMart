@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" href="{% static 'css/basket.css' %}">
+{% endblock %}
+
+{% block main %}
+    <style>
+        .progress-step {
+            padding: 10px 0;
+            box-sizing: border-box;
+            border-bottom: 2px solid gray;
+            transition: all 0.15s;
+            background: #6490ff;
+            color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+
+        .active-step {
+            border-bottom: 2px solid white;
+        }
+
+        .checkout_details_form_inputs {
+            width: 100%;
+            padding: 7px 5px;
+            border: 1px solid white;
+            border-radius: 2px;
+            background: white;
+        }
+
+        .checkout_details_form_inputs:focus {
+            outline: none;
+        }
+
+        .checkout_form_buttons {
+            padding: 8px 10px;
+            background: #6490ff;
+            color: white;
+            border-radius: 2px;
+            border: 1px solid white;
+        }
+        .checkout_main_section_content_div {
+            padding: 5px 15px;
+        }
+
+        .checkout_form_buttons:disabled {
+            background: #495057;
+        }
+
+        .checkout_form_buttons_div {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+        }
+        #checkout_details_form label {
+            color: white;
+        }
+    </style>
+    <div class="container" style="margin-top: 100px">
+        <div class="row">
+            <div class="col-5" style="margin: auto;padding: 0;background: #6490ff;">
+                <div id="progress-bar" style="margin-bottom: 10px;width: 100%;box-sizing: border-box;display: flex;flex-direction: row">
+                    <div class="progress-step {% if step == 'summary' %}active-step{% endif %}">Summary
+                    </div>
+                    <div class="progress-step {% if step == 'details' %}active-step{% endif %}">Details
+                    </div>
+                    <div class="progress-step {% if step == 'confirm' %}active-step{% endif %}">Confirm</div>
+                </div>
+
+                {% if step == 'summary' %}
+                    <div class="checkout_main_section_content_div">
+                    <table id="basket_summary_table"
+                           style="width: 100%; background-color: #6490ff; border-collapse: collapse;box-sizing: border-box;">
+                        <tr style="display: flex;">
+                            <th class="basket_summary_hd" style="flex: 1;">Product</th>
+                            <th class="basket_summary_hd" style="width: 60px;">Qty</th>
+                            <th class="basket_summary_hd" style="width: 110px;">@Price</th>
+                        </tr>
+                        {% for item in basket_items %}
+                            <tr style="display: flex;">
+                                <td class="basket_summary_td" style="flex: 1;">
+                                    <p class="basket_summary_product_title">{{ item.product_name }}</p>
+                                </td>
+                                <td class="basket_summary_td quantity" style="width: 60px;">{{ item.qty }}</td>
+                                <td class="basket_summary_td price"
+                                    style="width: 110px;overflow: hidden;">{{ item.price }}</td>
+                            </tr>
+                        {% endfor %}
+
+                    </table>
+                    <hr>
+                    </div>
+                    
+                    <div class="checkout_form_buttons_div">
+                        <p style="font-weight: 500;margin: 0;color: white">Total: KES {{ basket_subtotal }}</p>
+                        <form style="margin-left: auto" method="post">
+                            {% csrf_token %}
+                            <button class="checkout_form_buttons" type="submit" style="align-self: end">Continue to
+                                Details
+                            </button>
+                        </form>
+                    </div>
+
+
+                {% elif step == 'details' %}
+                    <div class="checkout_main_section_content_div">
+                    <form method="post" id="checkout_details_form">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-6">
+                                <label>First Name:</label><input class="checkout_details_form_inputs" type="text"
+                                                                 name="first_name" value="{{ user_data.first_name }}">
+                            </div>
+                            <div class="col-6">
+                                <label>Last Name:</label><input class="checkout_details_form_inputs" type="text"
+                                                                name="last_name" value="{{ user_data.last_name }}">
+                            </div>
+                        </div>
+                        
+                        <label>Email:</label><input class="checkout_details_form_inputs" type="email" name="email"
+                                                    value="{{ user_data.email }}">
+                        <div class="row">
+                            <div class="col-6">
+                                <label>Phone:</label><input class="checkout_details_form_inputs" type="text" name="phone"
+                                                    value="{{ user_data.phone }}">
+                            </div>
+                            <div class="col-6">
+                                <label>County:</label><input class="checkout_details_form_inputs" type="text" name="county"
+                                                     value="{{ user_data.county }}">
+                            </div>
+                        </div>
+                    </form>
+                    <hr>
+                    </div>
+                    <div class="checkout_form_buttons_div">
+                        <form method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="back" value="true">
+                            <button class="checkout_form_buttons" type="submit">Back to Summary</button>
+                        </form>
+
+                        <button class="checkout_form_buttons" type="submit" onclick="detailsFormSubmit()"
+                                id="details_form_submit_button" disabled>Continue to Confirmation
+                        </button>
+                    </div>
+
+
+                {% elif step == 'confirm' %}
+                    <div class="checkout_main_section_content_div">
+                    <p style="color: white">
+                        Name: <b>{{ user_data.first_name }} {{ user_data.last_name }} |</b>
+                        Email: <b>{{ user_data.email }} |</b> Phone: <b>{{ user_data.phone }} |</b>
+                        County: <b>{{ user_data.county }}</b>
+                    </p>
+
+                    <p style="color: white">
+                        Items:
+                        {% for item in basket_items %}
+                            <b>|</b> {{ item.qty }} x {{ item.product_name }}@{{ item.price }}
+                        {% endfor %} <b>|| Total: {{ basket_subtotal }}</b>
+                    </p>
+                    <hr>
+                    </div>
+                    <div class="checkout_form_buttons_div">
+                        <form method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="back" value="true">
+                            <button class="checkout_form_buttons" type="submit">Back to Details</button>
+                        </form>
+                        <form method="post">
+                            {% csrf_token %}
+                            <button class="checkout_form_buttons" type="submit">Confirm</button>
+                        </form>
+                    </div>
+
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll('#checkout_details_form input');
+        const submitButton = document.getElementById('details_form_submit_button');
+
+        // Function to check if all fields are filled
+        function checkFormCompletion() {
+            let allFilled = true;
+            inputs.forEach(input => {
+                if (!input.value) {
+                    allFilled = false;
+                }
+            });
+
+            // Enable or disable submit button based on form completion
+            submitButton.disabled = !allFilled;
+        }
+
+        // Add event listeners to check form completion on input change
+        inputs.forEach(input => {
+            input.addEventListener('input', checkFormCompletion);
+        });
+
+        function detailsFormSubmit() {
+            document.getElementById('checkout_details_form').submit()
+        }
+
+        // Run the checkFormCompletion function initially in case there are pre-filled fields
+        checkFormCompletion();
+    </script>
+{% endblock %}

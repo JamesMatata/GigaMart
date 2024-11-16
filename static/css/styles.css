@@ -87,12 +87,21 @@
     box-sizing: border-box;
     flex-shrink: 0;
     scroll-snap-align: start;
+    overflow: hidden;
 }
 
-.category_card img {
+.category_image_container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.category_image {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .category_title_div {
@@ -119,7 +128,6 @@
     color: white;
     font-weight: 500;
 }
-
 .nav-button {
     background-color: #6490ff;
     color: white;

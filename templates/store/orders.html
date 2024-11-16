@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% load custom_filters %}
+
+{% block extra_styles %}
+    <link rel="stylesheet" href="{% static 'css/inquiry_order_page.css' %}">
+{% endblock %}
+
+{% block main %}
+    <div class="container" style="margin-top: 100px">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-9" style="margin: auto;">
+            <div class="row inquiry_order_page_top_div"
+                 style="display: flex;flex-direction: row;justify-content: end;align-items: center;margin-bottom: 10px;">
+                <div id="inquiry_form" class="inquiry_order_page_search_form"
+                     style="display: flex;flex-direction: row;justify-content: end;align-items: center;">
+                    <input type="text" name="inquiry_id" id="inquiry_id" placeholder="Enter Order ID"
+                           style="padding: 8px;border: 1px solid gray;border-radius: 3px;outline: none;">
+                    <input id="get_inquiry_url" type="text" value="{% url 'store:get_order' %}" hidden="hidden">
+                    <button id="get_inquiry_button"
+                            style="padding: 8px 10px;background-color: #6490ff;border: 1px solid #6490ff;color: white;border-radius: 3px;margin-left: 5px;">
+                        Get
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div class="row" id="all_inquiry_order_cards_div">
+                {% if user.is_authenticated %}
+                    {% if orders %}
+                        {% for order in orders %}
+                            <div class="col-12 col-md-6" style="padding: 0;margin: auto">
+                                <div class="inquiry_order_card">
+                                    <div class="inquiry_order_card_top_div"
+                                         style="display: flex;flex-direction: row;justify-content: space-between;">
+                                        <p style="margin: 0;">Order ID: <b>{{ order.unique_id }}</b></p>
+                                        <p style="margin: 0;">{{ order.created_at|date:"d M, Y" }}</p>
+                                    </div>
+                                    <hr>
+                                    <p class="inquiry_order_card_items">
+                                        <b>Items: |</b>
+                                        {% for item in order.inquiry.items %}
+                                            {{ item.qty }} x {{ item.product_name }} @ KES {{ item.price }}
+                                        {% endfor %}
+                                        <b>|| Total: KES {{ order.inquiry.items|total_price }}</b>
+                                    </p>
+                                    <hr>
+                                    <div class="inquiry_order_card_bottom_div"
+                                         style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;">
+                                        <p class="inquiry_order_card_status"
+                                           style="font-weight: bold;border-radius: 3px;margin: auto auto 0;">
+                                            Status: <span
+                                                style="color: {% if order.order_status == 'Pending' %}orange{% else %}green{% endif %};">{{ order.order_status }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No orders found.</p>
+                    {% endif %}
+                    <div class="row users_info_divs">
+                        <div class="col-12 col-sm-12 col-md-11 col-lg-9 col-xl-7 authenticated_users_info">
+                            <p>You can also view any order placed without logging in by entering the Order ID sent to your email in the field above.</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="row users_info_divs">
+                        <div class="col-12 col-sm-12 col-md-11 col-lg-9 col-xl-7 unauthenticated_users_info">
+                            <p style="font-size: 17px;"><b>You are a Guest User!</b></p>
+                            <p>Please enter an Order ID sent to your email in the input above and click get to view your
+                                order.</p>
+                            <hr>
+                            <p style="color: #6490ff">For a better experience, consider creating an account. <a
+                                    href="{% url 'accounts:register' %}">Register</a></p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'js/inquiry_order_js.js' %}"></script>
+{% endblock %}
