@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% load static %}
 
@@ -9,9 +10,10 @@
 {% endblock %}
 
 {% block main %}
-    <div class="container" style="margin-top: 100px">
-        <div class="columns_title_div">
-            <h3 style="font-size: 20px;color: white;font-weight: 500;margin: 0;">All Categories</h3>
+    {% if categories %}
+    <div class="container">
+        <div class="cards_column_head">
+            <h3>All Categories</h3>
         </div>
         <div class="container category-container">
             <button class="nav-button left" onclick="moveCard('left')">
@@ -50,10 +52,12 @@
             </button>
         </div>
     </div>
+    {% endif %}
 
+    {% if top_traded_products %}
     <div class="container" style="margin-top: 50px">
-        <div class="columns_title_div">
-            <h3 style="font-size: 20px;color: white;font-weight: 500;margin: 0;">Most Traded</h3>
+        <div class="cards_column_head">
+            <h3>Most Traded</h3>
         </div>
         <div class="product-grid" style="margin-top: 10px">
             {% for item in top_traded_products %}
@@ -68,7 +72,7 @@
                             </a>
                         </p>
                         <p class="product_price">
-                            KES <span>{{ item.price }}</span>
+                            KES <span>{{ item.price|intcomma }}</span>
                             {% if item.discount > 0 %}
                                 | <span>{{ item.discount }}%</span>
                             {% endif %}
@@ -124,6 +128,7 @@
             {% endfor %}
         </div>
     </div>
+    {% endif %}
 
     <div class="row how_it_works_div" style="margin-top: 150px;">
         <div class="col-11 col-sm-9 col-md-10 col-lg-9 col-xl-8"

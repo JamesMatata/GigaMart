@@ -1,8 +1,9 @@
-<div class="row" id="product-list">
+{% load humanize %}
+<div class="row" id="product-list" style="width: 100%">
     <div class="container-fluid" style="box-sizing: border-box">
         <div class="row">
             {% for item in products %}
-                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3" style="padding: 0 5px">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3" style="padding: 0 5px;display: flex;flex-direction: column;justify-content: center;align-items: center">
                     <div class="grid_product_card" style="width: 100%!important;">
                         <div class="image_div" style="height: 50%; width: 100%; box-sizing: border-box">
                             <img src="{{ item.main_image.url }}" alt="{{ item.name }}_image"/>
@@ -12,7 +13,7 @@
                                 <a href="{{ item.get_absolute_url }}">{{ item.name }}</a>
                             </p>
                             <p class="product_price">
-                                KES <span>{{ item.price }}</span>
+                                KES <span>{{ product.price|intcomma }}</span>
                                 {% if item.discount > 0 %}
                                     | <span>{{ item.discount }}%</span>
                                 {% endif %}

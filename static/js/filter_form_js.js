@@ -70,10 +70,13 @@ function getCurrentFilterParams(form) {
 // Apply filters and handle pagination with AJAX
 function applyFilters(form) {
     const params = getCurrentFilterParams(form);
+    console.log(params)
     const searchNavInput = document.getElementById('search_query')
     if(searchNavInput) {
         params.append('searchbar_input', getCurrentQuery());
     }
+
+    console.log(window.location.pathname)
 
     fetch(`${window.location.pathname}?${params.toString()}`, {
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
@@ -173,17 +176,12 @@ function initializeFilters() {
     if (!isLargeScreen) {
         const smallScreenForm = document.getElementById('small-screen-filter-form');
         if (smallScreenForm) {
-            document.querySelectorAll('#small-screen-filter-form select, #small-screen-filter-form input[type="number"]').forEach(input => {
-                input.addEventListener('input', function() {
-                    applyFilters(smallScreenForm);
-                });
-            });
-
             // Apply filters on form submission (for small screen)
             smallScreenForm?.addEventListener('submit', function(event) {
                 event.preventDefault();  // Prevent form submission
                 applyFilters(smallScreenForm);  // Apply filters when the submit button is clicked
             });
+            console.log(getCurrentFilterParams(smallScreenForm))
 
             // Trigger the initial filtering when the page loads for small screen form
             applyFilters(smallScreenForm);

@@ -12,6 +12,23 @@
     .about_us_text_div p {
         text-align: center;
     }
+    .category_card {
+    width: 41vw!important;
+    height: 220px!important;
+}
+.category_title_div {
+    padding: 5px!important;
+    height: 44px!important;
+}
+
+.Category_title {
+    line-height: 17px!important;
+    max-height: 34px!important;
+    font-size: 15px!important;
+}
+.category-container {
+    width: 100%!important;
+}
 }
 @media (min-width: 576px) and (max-width: 770px) {
     .how_it_works_step_div {
@@ -65,10 +82,6 @@
     display: none;
 }
 
-.columns_title_div {
-    width: 100%;padding: 15px;background-color: #6490ff;box-sizing: border-box;border-radius: 10px 10px 0 0;
-}
-
 .category-cards {
     display: flex;
     flex-direction: row;
@@ -101,7 +114,7 @@
 .category_image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .category_title_div {

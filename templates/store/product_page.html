@@ -3,8 +3,10 @@
 
 {% load custom_filters %}
 
+{% load humanize %}
+
 {% block main %}
-    <div class="container product_page" style="margin-top: 80px">
+    <div class="container product_page">
         <div class="col-12 col-sm-11 col-md-10 col-lg-8 col-xl-8" style="margin: auto;">
             <div class="row">
                 <div class="col-12 col-md-6 product_page_images">
@@ -27,13 +29,13 @@
                         {{ product.name }}
                     </h3>
                     <p style="font-size: 16px;">
-                        {% if product.description|length > 330 %}
-                            {{ product.description|slice:":330" }}...
+                        {% if product.description|length > 250 %}
+                            {{ product.description|slice:":250" }}...
                         {% else %}
                             {{ product.description }}
                         {% endif %}
                     </p>
-                    <p style="font-size: 18px;">KES <span style="font-weight: bold;">{{ product.price }}</span></p>
+                    <p style="font-size: 18px;">KES <span style="font-weight: bold;">{{ product.price|intcomma }}</span></p>
                     <p style="font-size: 15px;font-weight: 500;color: green;">
                         {% if product.items_remaining > 0 %}Available{% else %}Out of Stock{% endif %}
                     </p>

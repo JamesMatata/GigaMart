@@ -79,6 +79,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     brand = models.CharField(max_length=255)
+    short_description = models.TextField(null=True)
     description = models.TextField(null=True)
     key_features = models.JSONField(null=True)
     specifications = models.JSONField(null=True)
@@ -128,7 +129,7 @@ def remove_product_images(sender, instance, **kwargs):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="additional_images")
-    image = models.ImageField(upload_to='products')
+    image = models.ImageField(upload_to='products', default='products/default.jpg')
 
     class Meta:
         verbose_name_plural = 'ProductImages'
@@ -236,7 +237,7 @@ class Inquiry(models.Model):
     email = models.EmailField()
     items = models.JSONField()
     inquiry_status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='Pending')
-    inquiry_whatsapp_link = models.URLField()
+    inquiry_whatsapp_link = models.URLField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

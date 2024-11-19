@@ -28,6 +28,8 @@ def register(request):
     if request.method == 'POST':
         context = {'has_error': False, 'data': request.POST}
         first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone_number = request.POST.get('phone_number')
         username = request.POST.get('username')
         email = request.POST.get('email')
         password1 = request.POST.get('password1')
@@ -50,8 +52,20 @@ def register(request):
             messages.add_message(request, messages.ERROR, 'First name is required')
             context['has_error'] = True
 
+        if not last_name:
+            messages.add_message(request, messages.ERROR, 'Last name is required')
+            context['has_error'] = True
+
         if not username:
             messages.add_message(request, messages.ERROR, 'Username is required')
+            context['has_error'] = True
+
+        if not phone_number:
+            messages.add_message(request, messages.ERROR, 'Phone number is required')
+            context['has_error'] = True
+
+        if User.objects.filter(phone_number=phone_number).exists():
+            messages.add_message(request, messages.ERROR, 'Phone number already being used, enter different phone number')
             context['has_error'] = True
 
         if User.objects.filter(username=username).exists():
@@ -69,6 +83,8 @@ def register(request):
             new_user = User.objects.create_user(username=username, email=email)
             new_user.set_password(password1)
             new_user.first_name = first_name
+            new_user.last_name = last_name
+            new_user.phone_number = phone_number
             new_user.is_active = False  # User must confirm email before being active
             new_user.save()
 

@@ -10,48 +10,50 @@
         }
     </style>
 
-    <div class="container" style="margin-top: 100px">
-        <div style="width: 100%;padding: 15px;background-color: #6490ff;box-sizing: border-box;border-radius: 10px 10px 0 0;">
+    <div class="container">
+        <div class="cards_column_head">
             <h3 style="font-size: 20px;color: white;font-weight: 500;margin: 0;">{{ category.name }}</h3>
         </div>
-        <div class="container category-container">
-            <button class="nav-button left" onclick="moveCard('left')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                    <g fill="none" fill-rule="evenodd">
-                        <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/>
-                        <path fill="currentColor"
-                              d="M7.94 13.06a1.5 1.5 0 0 1 0-2.12l5.656-5.658a1.5 1.5 0 1 1 2.121 2.122L11.122 12l4.596 4.596a1.5 1.5 0 1 1-2.12 2.122l-5.66-5.658Z"/>
-                    </g>
-                </svg>
-            </button>
-            <div class="category-cards-wrapper">
-                <div class="category-cards">
-                    {% for subcategory in subcategories %}
-                        <div class="category_card">
-                            <div style="flex: 1;">
-                                <img src="{{ subcategory.image.url }}" alt="">
+        {% if subcategories %}
+            <div class="container category-container">
+                <button class="nav-button left" onclick="moveCard('left')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                        <g fill="none" fill-rule="evenodd">
+                            <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/>
+                            <path fill="currentColor"
+                                  d="M7.94 13.06a1.5 1.5 0 0 1 0-2.12l5.656-5.658a1.5 1.5 0 1 1 2.121 2.122L11.122 12l4.596 4.596a1.5 1.5 0 1 1-2.12 2.122l-5.66-5.658Z"/>
+                        </g>
+                    </svg>
+                </button>
+                <div class="category-cards-wrapper">
+                    <div class="category-cards">
+                        {% for subcategory in subcategories %}
+                            <div class="category_card">
+                                <div class="category_image_container">
+                                    <img class="category_image" src="{{ subcategory.image.url }}" alt="">
+                                </div>
+                                <div class="category_title_div">
+                                    <p class="Category_title">
+                                        <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="category_title_div">
-                                <p class="Category_title">
-                                    <a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a>
-                                </p>
-                            </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
+                <button class="nav-button right" onclick="moveCard('right')">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                        <g fill="none" fill-rule="evenodd">
+                            <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/>
+                            <path fill="currentColor"
+                                  d="M16.06 10.94a1.5 1.5 0 0 1 0 2.12l-5.656 5.658a1.5 1.5 0 1 1-2.121-2.122L12.879 12L8.283 7.404a1.5 1.5 0 0 1 2.12-2.122l5.658 5.657Z"/>
+                        </g>
+                    </svg>
+                </button>
             </div>
-            <button class="nav-button right" onclick="moveCard('right')">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                    <g fill="none" fill-rule="evenodd">
-                        <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/>
-                        <path fill="currentColor"
-                              d="M16.06 10.94a1.5 1.5 0 0 1 0 2.12l-5.656 5.658a1.5 1.5 0 1 1-2.121-2.122L12.879 12L8.283 7.404a1.5 1.5 0 0 1 2.12-2.122l5.658 5.657Z"/>
-                    </g>
-                </svg>
-            </button>
-        </div>
-    </div>
+        {% endif %}
 
+    </div>
     <div class="container" style="margin-top: 50px">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3" id="large-screen-filter-form-div">
@@ -120,9 +122,11 @@
                  style="display: none">
                 <!-- Dropdown button with icon -->
                 <button id="filter-toggle-btn" class="filter-toggle-btn"
-                        style="background-color: #6490ff; border-radius: 3px; padding: 5px 10px; border: 1px solid white; color: white; width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                        style="background-color: #6490ff; border-radius: 3px; padding: 10px; border: 1px solid white; color: white; width: 100%; display: flex; justify-content: space-between; align-items: center;">
                     <span>Filter Options</span>
-                    <i id="toggle-icon" class="fas fa-chevron-down"></i>
+                    <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+	<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M36 18L24 30L12 18" />
+</svg>
                 </button>
 
                 <form id="small-screen-filter-form" style="display: none; margin-top: 10px;">
@@ -192,7 +196,7 @@
             </div>
 
             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9">
-                <div class="row" id="product-list-div">
+                <div class="row" id="product-list-div" style="padding: 0;display: flex;flex-direction: column;justify-content: center;align-items: center">
                 </div>
             </div>
         </div>

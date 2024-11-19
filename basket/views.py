@@ -30,6 +30,7 @@ class BasketSummaryView(View):
         ]
 
         basket_subtotal = str(basket_subtotal)
+        print(basket_subtotal)
 
         # Check if the request is an AJAX call
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':

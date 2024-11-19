@@ -55,7 +55,7 @@ def category_list(request, category_slug):
         products = products.order_by('-id')
 
     # Pagination settings
-    paginator = Paginator(products, 1)  # Adjust items per page as needed
+    paginator = Paginator(products, 16)  # Adjust items per page as needed
     page_number = request.GET.get('page')
 
     try:
@@ -116,7 +116,7 @@ def search_results(request):
             products = products.order_by('-id')
 
         # Pagination
-        paginator = Paginator(products, 10)  # Adjust items per page as needed
+        paginator = Paginator(products, 16)  # Adjust items per page as needed
         page_number = request.GET.get('page')
 
         try:
@@ -179,7 +179,7 @@ def subcategory_list(request, category_slug, subcategory_slug):
         products = products.order_by('-id')
 
     # Pagination settings
-    paginator = Paginator(products, 1)  # Adjust items per page as needed
+    paginator = Paginator(products, 16)  # Adjust items per page as needed
     page_number = request.GET.get('page')
 
     try:
@@ -231,7 +231,7 @@ def remove_from_wishlist(request, product_id):
             product.users_wishlist.remove(request.user)
 
             # Get the count of products in the user's wishlist
-            wishlist_count = product.users_wishlist.count()
+            wishlist_count = Product.objects.filter(users_wishlist=request.user).count()
 
             # Return the response with the new wishlist count
             return JsonResponse({
@@ -310,7 +310,7 @@ def checkout_view(request):
                 encoded_message = urllib.parse.quote_plus(message)
 
                 # Final WhatsApp URL
-                whatsapp_url = f"https://wa.me/?text={encoded_message}"
+                whatsapp_url = f"https://wa.me/254743113141/?text={encoded_message}"
 
                 # Set the WhatsApp link in the Inquiry object
                 inquiry.inquiry_whatsapp_link = whatsapp_url

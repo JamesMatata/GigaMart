@@ -1,22 +1,3 @@
-calculateTotalCost();
-
-function calculateTotalCost() {
-    const totalCostElement = document.getElementById("total-costs");
-    const totalCostElementInput = document.getElementById("total-costs-input");
-    let subtotal = 0;
-
-    // Loop through each product item to calculate the subtotal
-    document.querySelectorAll('.product-item').forEach(item => {
-        const quantity = parseInt(item.querySelector('.quantity').value);
-        const price = parseFloat(item.querySelector('.price').textContent);
-        subtotal += quantity * price;
-    });
-
-    // Update the total cost elements
-    totalCostElement.textContent = 'KES ' + subtotal.toFixed(2);
-    totalCostElementInput.value = subtotal.toFixed(2);
-}
-
 function updateSummarySection(basketItems) {
     const summaryTable = document.querySelector(".basket_summary_div table");
 
@@ -43,7 +24,7 @@ function updateSummarySection(basketItems) {
     }
 
     // Recalculate the total cost after updating the summary section
-    calculateTotalCost();
+    refreshBasketSummary();
 }
 
 function refreshBasketSummary() {
@@ -56,7 +37,7 @@ function refreshBasketSummary() {
             updateSummarySection(json.basket_items);
 
             // Update subtotal if needed
-            document.getElementById("basket-subtotal").textContent = "KES " + json.subtotal;
+            document.getElementById("total-costs").textContent = "KES " + json.subtotal;
         },
         error: function (xhr) {
             console.log('Error: ' + xhr.responseText);
@@ -80,6 +61,7 @@ $(document).on('click', '.delete-button', function (e) {
         success: function (json) {
             $(`.product-item[data-index="${productId}"]`).remove();
             document.getElementById("basket-qty").innerHTML = json.qty;
+            document.getElementById("small_device_basket-qty").innerHTML = json.qty;
             refreshBasketSummary()
 
             if (json.qty === 0) {
@@ -89,7 +71,7 @@ $(document).on('click', '.delete-button', function (e) {
                     </p>`;
             }
 
-            calculateTotalCost();
+            refreshBasketSummary();
         },
         error: function (xhr) {
             console.log('Error: ' + xhr.responseText);
@@ -112,6 +94,7 @@ $(document).on('click', '.update-button', function (e) {
         contentType: 'application/json',  // Ensure data type matches expected JSON format
         success: function (json) {
             document.getElementById("basket-qty").innerHTML = json.qty;
+            document.getElementById("small_device_basket-qty").innerHTML = json.qty;
             refreshBasketSummary()
         },
         error: function (xhr) {

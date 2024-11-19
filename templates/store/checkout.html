@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% load static %}
 
 {% block extra_styles %}
@@ -63,7 +64,7 @@
             color: white;
         }
     </style>
-    <div class="container" style="margin-top: 100px">
+    <div class="container">
         <div class="row">
             <div class="col-5" style="margin: auto;padding: 0;background: #6490ff;">
                 <div id="progress-bar" style="margin-bottom: 10px;width: 100%;box-sizing: border-box;display: flex;flex-direction: row">
@@ -90,7 +91,7 @@
                                 </td>
                                 <td class="basket_summary_td quantity" style="width: 60px;">{{ item.qty }}</td>
                                 <td class="basket_summary_td price"
-                                    style="width: 110px;overflow: hidden;">{{ item.price }}</td>
+                                    style="width: 110px;overflow: hidden;">{{ item.price|intcomma }}</td>
                             </tr>
                         {% endfor %}
 
@@ -163,8 +164,8 @@
                     <p style="color: white">
                         Items:
                         {% for item in basket_items %}
-                            <b>|</b> {{ item.qty }} x {{ item.product_name }}@{{ item.price }}
-                        {% endfor %} <b>|| Total: {{ basket_subtotal }}</b>
+                            <b>|</b> {{ item.qty }} x {{ item.product_name }}@{{ item.price|intcomma }}
+                        {% endfor %} <b>|| Total: {{ basket_subtotal|intcomma }}</b>
                     </p>
                     <hr>
                     </div>

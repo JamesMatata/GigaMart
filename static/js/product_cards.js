@@ -31,7 +31,8 @@ function addToCart(productId) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                document.getElementById('basket-qty').innerText = data.basket_qty;  // Update the basket quantity display
+                document.getElementById("small_device_basket-qty").innerText = data.basket_qty;
+                document.getElementById('basket-qty').innerText = data.basket_qty;
             }
         })
         .catch(error => {

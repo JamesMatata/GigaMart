@@ -4,7 +4,12 @@
 {% block title %}{{ subcategory.name }} | GigaMart{% endblock %}
 
 {% block main %}
-    <div class="container" style="margin-top: 100px">
+    <div class="container">
+        <div class="cards_column_head">
+            <h3 style="font-size: 20px;color: white;font-weight: 500;margin: 0;">{{ subcategory.name }}</h3>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 15px">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3" id="large-screen-filter-form-div">
                 <form id="large-screen-filter-form">
@@ -59,9 +64,11 @@
                  style="display: none">
                 <!-- Dropdown button with icon -->
                 <button id="filter-toggle-btn" class="filter-toggle-btn"
-                        style="background-color: #6490ff; border-radius: 3px; padding: 5px 10px; border: 1px solid white; color: white; width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                        style="background-color: #6490ff; border-radius: 3px; padding: 10px; border: 1px solid white; color: white; width: 100%; display: flex; justify-content: space-between; align-items: center;">
                     <span>Filter Options</span>
-                    <i id="toggle-icon" class="fas fa-chevron-down"></i>
+                    <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48">
+	<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M36 18L24 30L12 18" />
+</svg>
                 </button>
 
                 <form id="small-screen-filter-form" style="display: none; margin-top: 10px;">
@@ -118,7 +125,7 @@
             </div>
 
             <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 main_product_list_div">
-                <div class="row" id="product-list-div">
+                <div class="row" id="product-list-div" style="padding: 0;display: flex;flex-direction: column;justify-content: center;align-items: center">
                    
                 </div>
             </div>

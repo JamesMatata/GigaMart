@@ -1,5 +1,10 @@
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
+    .base_main_content_div {
+        margin-top: 150px!important;
+        padding: 5px!important;
+    }
+
     .main_nav {
         display: none !important;
     }
@@ -24,10 +29,23 @@
         width: 100% !important;
         margin: 10px 0 !important;
     }
+
+    .cards_column_head {
+    padding: 10px 8px!important;
+}
+
+.cards_column_head h3 {
+    font-size: 16px!important;
+}
+
 }
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 840px) {
+    .base_main_content_div {
+        margin-top: 150px!important;
+    }
+
     .main_nav {
         display: none !important;
     }
@@ -136,30 +154,30 @@
 }
 
 .dropdown_menu ul {
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
 }
 
 .dropdown_menu ul li {
-  padding: 0;
-  width: 100%;
+    padding: 0;
+    width: 100%;
 }
 
 .dropdown_menu ul li a {
-  display: block;
-  width: 100%;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  color: white;
-  font-weight: 500;
-  transition: all 0.15s ease;
-  text-decoration: none;
+    display: block;
+    width: 100%;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    color: white;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    text-decoration: none;
 }
 
 .dropdown_menu ul li a:hover, .dropdown_menu ul li a:active {
-  border-bottom: 2px solid white;
+    border-bottom: 2px solid white;
 }
 
 .rotate-icon {
@@ -173,11 +191,11 @@
 .account_dropdown_button_links {
     justify-content: space-between;
     padding: 5px 10px;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      color: white;
-      font-weight: 500;
-      transition: all 0.15s ease;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    color: white;
+    font-weight: 500;
+    transition: all 0.15s ease;
     text-decoration: none;
 }
 
@@ -362,4 +380,17 @@
 .footer_connect_section div a svg {
     width: 35px;
     height: 35px;
+}
+
+.base_main_content_div {
+    margin-top: 100px;
+    padding: 10px;box-sizing: border-box;
+}
+
+.cards_column_head {
+    width: 100%;padding: 20px 15px;background-color: #6490ff;box-sizing: border-box;border-radius: 5px 5px 0 0;
+}
+
+.cards_column_head h3 {
+    font-size: 20px;color: white;font-weight: 500;margin: 0;
 }

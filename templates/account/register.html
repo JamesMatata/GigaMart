@@ -11,19 +11,22 @@
             <div class="row">
                 <div class="col-6" style="padding-left: 12px;padding-right: 3px">
                     <label for="first_name">First name:</label>
-                    <input class="form_inputs" type="text" name="first_name" id="first_name">
+                    <input class="form_inputs" type="text" name="first_name" id="first_name"
+                           value="{{ data.first_name|default:'' }}">
                 </div>
                 <div class="col-6" style="padding-right: 12px;padding-left: 3px">
                     <label for="last_name">Last name:</label>
-                    <input class="form_inputs" type="text" name="last_name" id="last_name">
+                    <input class="form_inputs" type="text" name="last_name" id="last_name"
+                           value="{{ data.last_name|default:'' }}">
                 </div>
             </div>
             <label for="username">Username:</label>
-            <input class="form_inputs" type="text" name="username" id="username">
+            <input class="form_inputs" type="text" name="username" id="username" value="{{ data.username|default:'' }}">
             <label for="email">Email:</label>
-            <input class="form_inputs" type="email" name="email" id="email">
+            <input class="form_inputs" type="email" name="email" id="email" value="{{ data.email|default:'' }}">
             <label for="phone_number">Phone number:</label>
-            <input class="form_inputs" type="tel" name="phone_number" id="phone_number">
+            <input class="form_inputs" type="tel" name="phone_number" id="phone_number"
+                   value="{{ data.phone_number|default:'' }}">
             <div class="row">
                 <div class="col-6" style="padding-left: 12px;padding-right: 3px">
                     <label for="password1">Create Password:</label>
@@ -37,7 +40,6 @@
             <button type="submit" class="form_buttons">Register</button>
         </form>
         <hr>
-        <p style="text-align: center;font-size: 14px;">Have an account?<a href="{% url 'accounts:login' %}">LogIn</a>
-        </p>
+        <p style="text-align: center;font-size: 14px;">Have an account?<a href="{% url 'accounts:login' %}">LogIn</a></p>
     </div>
 {% endblock %}
